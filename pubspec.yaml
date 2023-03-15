@@ -27,6 +27,7 @@ dependencies:
   json_annotation: ^4.1.0
   hive_generator: ^1.1.0
   flutter_html: 2.2.1
+  flutter_osm_plugin: ^0.51.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

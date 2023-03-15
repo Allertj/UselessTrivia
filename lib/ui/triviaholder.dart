@@ -60,10 +60,8 @@ class _SampleAppPageState extends State<SampleAppPage> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(year.toString()),
+      actions: [okButton],
       content: Html(data: message),
-      actions: [
-        okButton,
-      ],
     );
 
     // show the dialog

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:useless_trivia/ui/streepmap/streetmap.dart';
 import 'package:useless_trivia/ui/triviaholder.dart';
 import 'form.dart';
 
@@ -35,9 +36,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(widget.title), actions: <Widget>[
+        IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => StreetMap()),
+              );
+              // do something
+            })
+      ]),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -50,4 +62,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
