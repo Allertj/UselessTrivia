@@ -2,18 +2,23 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:useless_trivia/domain/i_trivia_repository.dart';
+import 'package:useless_trivia/domain/database_repository.dart';
 
 import '../../model/trivia.dart';
 
-class DatabaseRepository implements ITriviaRepository {
+class SQFLiteRepository implements DatabaseRepository {
+  static String firstTable = "trivia";
+
   Future<Database> getDatabase() async {
     WidgetsFlutterBinding.ensureInitialized();
     final database = openDatabase(
       join(await getDatabasesPath(), 'trivia_database1.db'),
-      onCreate: (db, version) {
-        return db.execute(
-          'CREATE TABLE trivia(id STRING PRIMARY KEY, year INTEGER, description TEXT)',
+      onCreate: (db, version) async {
+        await db.execute(
+            'CREATE TABLE $firstTable(id STRING PRIMARY KEY, searchTerm STRING, description TEXT)'
+        );
+        await db.execute(
+            'CREATE TABLE vehicle(trackedObjectId INTEGER PRIMARY KEY, identification STRING, kenteken STRING, street STRING, city STRING, countryCode STRING, deviceId STRING, speed REAL, latitude REAL, longitude REAL, directionText STRING, direction INTEGER, statusCode STRING, activityChangeTime STRING, activityName STRING, activityIcon STRING, timestampUTC STRING, employeeId INTEGER, employeeName STRING, employeePhone STRING, employeeDriverCardId STRING, trailerName STRING)'
         );
       },
       version: 1,

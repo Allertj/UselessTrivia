@@ -1,10 +1,14 @@
-import 'package:dio/dio.dart';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:useless_trivia/repository/database/trivia_repository.dart';
-import 'package:useless_trivia/repository/retrofit/wikipedia_client.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:useless_trivia/ui/year_recylcerview.dart';
 import 'package:uuid/uuid.dart';
 
-import 'model/trivia.dart';
+import '../model/trivia.dart';
+import '../repository/database/trivia_repository.dart';
+import '../repository/retrofit/responses.dart';
+import '../repository/retrofit/wikipedia_client.dart';
 
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
@@ -14,48 +18,35 @@ class MyCustomForm extends StatefulWidget {
 }
 
 class _MyCustomFormState extends State<MyCustomForm> {
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
   final myController = TextEditingController();
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     myController.dispose();
     super.dispose();
   }
 
-  Future<void> _getYear(String year) async {
-    final WikipediaClient client = WikipediaClient(
-      Dio(
-        BaseOptions(contentType: "application/json"),
-      ),
-    );
-
-    if (int.tryParse(year) != null) {
-      Future<WikipediaResponse> result = client.getTrivia(year: int.parse(year));
-      WikipediaResponse finalresult = await result;
-
-      // print(tt.extract);
-      DatabaseRepository db = DatabaseRepository();
-      // if (finalresult.extract != null) {
-      final Trivia trivia = Trivia(id: const Uuid().v4(),
-          year: int.parse(year),
-          description: finalresult.extract);
-      print(trivia);
-      db.insert(trivia);
-      //
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final db = context.read<SQFLiteRepository>();
+    final wc = context.read<WikipediaClient>();
+    final TriviaBloc triviaBloc = BlocProvider.of<TriviaBloc>(context);
+    Trivia trivia;
+    WikipediaResponse received;
+    String searchTerm;
+    // String dd;
     return Column(children: <Widget>[
       Row(children: <Widget>[
         Expanded(child: buildTextField()),
         ElevatedButton(
-          onPressed: () => _getYear(myController.value.text),
           child: const Text('Zoek'),
+          onPressed: () async => {
+            searchTerm = myController.value.text.toString(),
+            received = await wc.getTriviaByString(searchTerm: myController.value.text),
+            trivia = Trivia(id: "dfsdf", searchTerm: searchTerm, description: received.extract),
+            db.insert(trivia),
+            triviaBloc.add(NewEntryReceived(trivia))
+          },
         )
       ]),
     ]);

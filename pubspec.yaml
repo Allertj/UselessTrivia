@@ -28,6 +28,10 @@ dependencies:
   hive_generator: ^1.1.0
   flutter_html: 2.2.1
   flutter_osm_plugin: ^0.51.0
+  sqlite3_flutter_libs: ^0.5.0
+  flutter_bloc: 8.1.2
+  drift: any
+  path_provider: ^2.0.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -39,7 +43,7 @@ dev_dependencies:
   retrofit_generator: '>=5.0.0 <6.0.0'
   build_runner: '>=2.3.0 <4.0.0'
   json_serializable: '>=4.4.0'
-
+  drift_dev: any
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

@@ -1,6 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
+import 'package:useless_trivia/repository/retrofit/responses.dart';
 
 part 'wikipedia_client.g.dart';
 
@@ -13,40 +13,18 @@ abstract class WikipediaClient {
     @Path('year') required int year,
   });
 
+  @GET('/summary/{search_term}')
+  Future<WikipediaResponse> getTriviaByString({
+    @Path('search_term') required String searchTerm,
+  });
+
   @GET('/mobile-sections-lead/{year}')
   Future<WikipediaMobileSectionResponse> getMobileSectionLead({
     @Path('year') required int year,
   });
 
-}
-
-
-@JsonSerializable()
-class WikipediaResponse {
-  String extract;
-
-  WikipediaResponse({required this.extract});
-
-  factory WikipediaResponse.fromJson(Map<String, dynamic> json) => _$WikipediaResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$WikipediaResponseToJson(this);
-}
-
-@JsonSerializable()
-class WikipediaMobileSectionResponse {
-  List<Section> sections;
-
-  WikipediaMobileSectionResponse({required this.sections});
-
-  factory WikipediaMobileSectionResponse.fromJson(Map<String, dynamic> json) => _$WikipediaMobileSectionResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$WikipediaMobileSectionResponseToJson(this);
-}
-
-@JsonSerializable()
-class Section {
-  int id;
-  String? text;
-  Section({required this.id, required this.text});
-
-  factory Section.fromJson(Map<String, dynamic> json) => _$SectionFromJson(json);
-  Map<String, dynamic> toJson() => _$SectionToJson(this);
+  @GET('/mobile-sections-lead/{year}')
+  Future<WikipediaMobileSectionResponse> getMobileSectionLeadByString({
+    @Path('search_term') required String searchTerm,
+  });
 }

@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
-import '../triviaholder.dart';
-
 class StreetMap extends StatelessWidget {
   StreetMap({super.key});
 
@@ -88,7 +86,7 @@ class StreetMap extends StatelessWidget {
                 ),
               )),
             )),
-            const SizedBox(height: 300, child: SampleAppPage()),
+            // const SizedBox(height: 300, child: SampleAppPage()),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
