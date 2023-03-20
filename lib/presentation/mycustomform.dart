@@ -1,12 +1,15 @@
 
+
+import 'package:drift/drift.dart' as d;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:useless_trivia/ui/year_recylcerview.dart';
+import 'package:useless_trivia/presentation/year_recylcerview.dart';
+import 'package:useless_trivia/repository/database/database.dart';
+import 'package:useless_trivia/repository/database/trivia_dao.dart';
 import 'package:uuid/uuid.dart';
 
-import '../model/trivia.dart';
-import '../repository/database/trivia_repository.dart';
+import '../repository/database/database.dart';
 import '../repository/retrofit/responses.dart';
 import '../repository/retrofit/wikipedia_client.dart';
 
@@ -28,7 +31,8 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    final db = context.read<SQFLiteRepository>();
+    final newDB = MyDatabase();
+    // final db = context.read<SQFLiteRepository>();
     final wc = context.read<WikipediaClient>();
     final TriviaBloc triviaBloc = BlocProvider.of<TriviaBloc>(context);
     Trivia trivia;
@@ -43,8 +47,11 @@ class _MyCustomFormState extends State<MyCustomForm> {
           onPressed: () async => {
             searchTerm = myController.value.text.toString(),
             received = await wc.getTriviaByString(searchTerm: myController.value.text),
-            trivia = Trivia(id: "dfsdf", searchTerm: searchTerm, description: received.extract),
-            db.insert(trivia),
+
+            trivia = Trivia(id: Uuid().v4(), searchTerm: searchTerm, description: received.extract),
+            newDB.triviaDao.insertTrivia(trivia),
+            print(await newDB.triviaClass.all()),
+
             triviaBloc.add(NewEntryReceived(trivia))
           },
         )

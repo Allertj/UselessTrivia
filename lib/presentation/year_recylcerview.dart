@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:useless_trivia/repository/database/database.dart';
 import 'package:useless_trivia/repository/retrofit/wikipedia_client.dart';
 import 'package:useless_trivia/util/util.dart';
-import '../model/trivia.dart';
 
 abstract class DatabaseEvent {}
 
@@ -57,7 +57,7 @@ class YearHolder extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.25),
                   child: ListTile(
                     title: Text(title),
-                    subtitle: Text(state[position].description),
+                    subtitle: Text(state[position].description != null ? state[position].description! : ""),
                     onTap: () async {
                       var received = await wc.getMobileSectionLead(year: int.parse(title));
                       AlertDialogUtil.showAlertDialog(

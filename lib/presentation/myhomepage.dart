@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:useless_trivia/ui/streepmap/streetmap.dart';
-import 'package:useless_trivia/ui/year_recylcerview.dart';
+import 'package:useless_trivia/presentation/google_maps/map_sample.dart';
+import 'package:useless_trivia/presentation/streepmap/streetmap.dart';
+import 'package:useless_trivia/presentation/year_recylcerview.dart';
 import 'mycustomform.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -20,6 +21,7 @@ class MyHomePage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
+                // MaterialPageRoute(builder: (context) => MapSample()),
                 MaterialPageRoute(builder: (context) => StreetMap()),
               );
               // do something
