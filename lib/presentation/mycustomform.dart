@@ -1,17 +1,10 @@
-
-
-import 'package:drift/drift.dart' as d;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:useless_trivia/presentation/year_recylcerview.dart';
-import 'package:useless_trivia/repository/database/database.dart';
-import 'package:useless_trivia/repository/database/trivia_dao.dart';
-import 'package:uuid/uuid.dart';
+import 'package:useless_trivia/application/request_watcher.dart';
+import 'package:useless_trivia/presentation/request_bloc.dart';
 
-import '../repository/database/database.dart';
-import '../repository/retrofit/responses.dart';
-import '../repository/retrofit/wikipedia_client.dart';
+import '../application/request_event.dart';
 
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
@@ -27,36 +20,6 @@ class _MyCustomFormState extends State<MyCustomForm> {
   void dispose() {
     myController.dispose();
     super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final newDB = MyDatabase();
-    // final db = context.read<SQFLiteRepository>();
-    final wc = context.read<WikipediaClient>();
-    final TriviaBloc triviaBloc = BlocProvider.of<TriviaBloc>(context);
-    Trivia trivia;
-    WikipediaResponse received;
-    String searchTerm;
-    // String dd;
-    return Column(children: <Widget>[
-      Row(children: <Widget>[
-        Expanded(child: buildTextField()),
-        ElevatedButton(
-          child: const Text('Zoek'),
-          onPressed: () async => {
-            searchTerm = myController.value.text.toString(),
-            received = await wc.getTriviaByString(searchTerm: myController.value.text),
-
-            trivia = Trivia(id: Uuid().v4(), searchTerm: searchTerm, description: received.extract),
-            newDB.triviaDao.insertTrivia(trivia),
-            print(await newDB.triviaClass.all()),
-
-            triviaBloc.add(NewEntryReceived(trivia))
-          },
-        )
-      ]),
-    ]);
   }
 
   Widget buildTextField() {
@@ -75,5 +38,28 @@ class _MyCustomFormState extends State<MyCustomForm> {
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    final TriviaBloc triviaBloc = BlocProvider.of<TriviaBloc>(context);
+    final RequestBloc requestBloc = BlocProvider.of<RequestBloc>(context);
+    String searchTerm;
+
+    return Column(children: <Widget>[
+      Row(children: <Widget>[
+        Expanded(child: buildTextField()),
+        ElevatedButton(
+          child: const Text('Zoek'),
+          onPressed: () async => {
+            searchTerm = myController.value.text.toString(),
+            // triviaBloc.add(RequestStringTerm(searchTerm))
+            requestBloc.add(RequestStringTerm1(searchTerm)),
+          },
+        )
+      ]),
+    ]);
+  }
+
+
 }
 

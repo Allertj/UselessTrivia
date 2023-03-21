@@ -1,14 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../repository/retrofit/wikipedia_client.dart';
 import 'myhomepage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,15 +12,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      // home:MyHomePage(),
-      home: MultiRepositoryProvider(
-        providers: [
-          // RepositoryProvider(create: (context) => SQFLiteRepository()),
-          RepositoryProvider(create: (context) => WikipediaClient(Dio(
-            BaseOptions(contentType: "application/json"),
-          )))
-        ],
-        child: MyHomePage()
+      home: const Scaffold(
+        body: MyHomePage(),
       )
     );
   }

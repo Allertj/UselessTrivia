@@ -5,7 +5,7 @@ part 'responses.g.dart';
 class WikipediaResponse {
   String extract;
 
-  WikipediaResponse({required this.extract});
+  WikipediaResponse(this.extract);
 
   factory WikipediaResponse.fromJson(Map<String, dynamic> json) => _$WikipediaResponseFromJson(json);
   Map<String, dynamic> toJson() => _$WikipediaResponseToJson(this);
@@ -15,7 +15,7 @@ class WikipediaResponse {
 class WikipediaMobileSectionResponse {
   List<Section> sections;
 
-  WikipediaMobileSectionResponse({required this.sections});
+  WikipediaMobileSectionResponse(this.sections);
 
   factory WikipediaMobileSectionResponse.fromJson(Map<String, dynamic> json) => _$WikipediaMobileSectionResponseFromJson(json);
   Map<String, dynamic> toJson() => _$WikipediaMobileSectionResponseToJson(this);
@@ -25,7 +25,7 @@ class WikipediaMobileSectionResponse {
 class Section {
   int id;
   String? text;
-  Section({required this.id, required this.text});
+  Section(this.id, this.text);
 
   factory Section.fromJson(Map<String, dynamic> json) => _$SectionFromJson(json);
   Map<String, dynamic> toJson() => _$SectionToJson(this);

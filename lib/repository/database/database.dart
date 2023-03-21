@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'dart:io';
 
 import 'package:drift/native.dart';
+import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:useless_trivia/repository/database/trivia_dao.dart';
@@ -115,18 +116,16 @@ class TriviaClass extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+@singleton
 @DriftDatabase(tables: [Vehicles, Messages, TriviaClass], daos: [TriviaDao])
 class MyDatabase extends _$MyDatabase {
   MyDatabase() : super(_openConnection());
 
-  // you should bump this number whenever you change or add a table definition.
-  // Migrations are covered later in the documentation.
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 }
 
 LazyDatabase _openConnection() {
-  // the LazyDatabase util lets us find the right location for the file async.
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'db.sqlite'));

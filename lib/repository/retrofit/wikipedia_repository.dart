@@ -7,55 +7,60 @@ import 'package:injectable/injectable.dart';
 
 import '../../domain/i_wikipedia_client.dart';
 import '../../domain/wikipedia_failure.dart';
+import '../../util/json_converter.dart';
 import '../database/database.dart';
 
-@Injectable(as: IWikipediaRepository)
+@LazySingleton(as: IWikipediaRepository)
 class WikipediaRepository implements IWikipediaRepository {
   final chopper = ChopperClient(
-    baseUrl: Uri.parse("https://en.wikipedia.org/api/rest_v1/page/"),
-    services: [
-      // Create and pass an instance of the generated service to the client
-      WikipediaService.create()
-    ],
+    baseUrl: Uri.parse("https://en.wikipedia.org/api/rest_v1/page"),
+    services: [WikipediaService.create()],
+    converter: JsonToTypeConverter(
+      {
+        WikipediaResponse: (Map<String, dynamic> json) => WikipediaResponse.fromJson(json),
+        WikipediaMobileSectionResponse: (Map<String, dynamic> json) => WikipediaMobileSectionResponse.fromJson(json),
+      },
+    ),
   );
 
   @override
-  Future<Either<WikipediaFailure, Trivia>> getMobileSectionLead(int year) async {
+  Future<Either<WikipediaFailure, Trivia>> getMobileSectionLead(
+      int year) async {
 
-      final wikiService = chopper.getService<WikipediaService>();
-      final Response response = await wikiService.getTrivia(year);
-      if (response.isSuccessful) {
-          try {
-            WikipediaMobileSectionResponse res = response.body;
-            return right(Trivia(
-                id: const Uuid().v4(),
-                searchTerm: year.toString(),
-                description: res.sections.toString()));
-          } catch (e) {
-              return left(const WikipediaFailure.serverError());
-          }
-      } else {
-        return left(const WikipediaFailure.serverError());
-      }
+    final wikiService = chopper.getService<WikipediaService>();
+    final Response<WikipediaMobileSectionResponse> wikipediaResponse = await wikiService.getMobileSectionLeadByString(year.toString());
 
+    if (wikipediaResponse.isSuccessful) {
+        try {
+          WikipediaMobileSectionResponse? res = wikipediaResponse.body;
+          return right(Trivia(
+              id: const Uuid().v4(),
+              searchTerm: year.toString(),
+              description: res?.sections.toString()));
+        } catch (e) {
+            return left(const WikipediaFailure.unexpected());
+        }
+    } else {
+    return left(const WikipediaFailure.serverError());
+    }
   }
 
   @override
-  Future<Either<WikipediaFailure, Trivia>> getMobileSectionLeadByString(String searchTerm) async {
+  Future<Either<WikipediaFailure, Trivia>> getMobileSectionLeadByString(
+      String searchTerm) async {
     try {
       final wikiService = chopper.getService<WikipediaService>();
-      final Response response = await wikiService.getMobileSectionLeadByString(searchTerm);
-      final WikipediaMobileSectionResponse res = response.body;
+      final Response<WikipediaMobileSectionResponse> wikipediaResponse = await wikiService.getMobileSectionLeadByString(searchTerm);
       try {
         return right(Trivia(
             id: const Uuid().v4(),
             searchTerm: searchTerm,
-            description: res.sections.toString()));
+            description: wikipediaResponse.body?.sections.toString()));
       } catch (e) {
         return left(const WikipediaFailure.unexpected());
       }
     } catch (e) {
-      return left(const WikipediaFailure.serverError());
+    return left(const WikipediaFailure.serverError());
     }
   }
 
@@ -63,18 +68,17 @@ class WikipediaRepository implements IWikipediaRepository {
   Future<Either<WikipediaFailure, Trivia>> getTrivia(int year) async {
     try {
       final wikiService = chopper.getService<WikipediaService>();
-      final Response response = await wikiService.getTrivia(year);
-      final WikipediaResponse res = response.body;
+      final Response<WikipediaResponse> wikipediaResponse = await wikiService.getTriviaByString(year.toString());
       try {
         return right(Trivia(
             id: const Uuid().v4(),
             searchTerm: year.toString(),
-            description: res.extract));
+            description: wikipediaResponse.body?.extract));
       } catch (e) {
         return left(const WikipediaFailure.unexpected());
       }
     } catch (e) {
-      return left(const WikipediaFailure.serverError());
+    return left(const WikipediaFailure.serverError());
     }
   }
 
@@ -83,13 +87,12 @@ class WikipediaRepository implements IWikipediaRepository {
       String searchTerm) async {
     try {
       final wikiService = chopper.getService<WikipediaService>();
-      final Response response = await wikiService.getTriviaByString(searchTerm);
-      final WikipediaResponse response1 = response.body;
+      final Response<WikipediaResponse> wikipediaResponse = await wikiService.getTriviaByString(searchTerm);
       try {
         return right(Trivia(
             id: const Uuid().v4(),
             searchTerm: searchTerm,
-            description: response1.extract));
+            description: wikipediaResponse.body?.extract));
       } catch (e) {
         return left(const WikipediaFailure.unexpected());
       }

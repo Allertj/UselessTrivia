@@ -1,9 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:useless_trivia/repository/database/database.dart';
-
-
-import 'database.dart';
-
 part 'trivia_dao.g.dart';
 
 
