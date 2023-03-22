@@ -39,7 +39,7 @@ class RequestPage extends StatelessWidget {
                 create: (context) => getIt<DatabaseWatcher>()..add(AskForCurrentEntries()),
               ),
               BlocProvider(
-                create: (context) => getIt<RequestBloc>(),
+                create: (context) => getIt<RequestWatcher>(),
               ),
             ],
             child: Column(

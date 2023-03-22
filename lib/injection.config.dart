@@ -32,10 +32,10 @@ _i1.GetIt init(
   gh.lazySingleton<_i4.IWikipediaRepository>(() => _i5.WikipediaRepository());
   gh.singleton<_i6.MyDatabase>(_i6.MyDatabase());
   gh.singleton<_i7.DatabaseWatcher>(_i7.DatabaseWatcher(gh<_i6.MyDatabase>()));
-  gh.factory<_i8.RequestBloc>(() => _i8.RequestBloc(
-        gh<_i4.IWikipediaRepository>(),
-        gh<_i6.MyDatabase>(),
-        gh<_i7.DatabaseWatcher>(),
-      ));
+  gh.singleton<_i8.RequestWatcher>(_i8.RequestWatcher(
+    gh<_i4.IWikipediaRepository>(),
+    gh<_i6.MyDatabase>(),
+    gh<_i7.DatabaseWatcher>(),
+  ));
   return getIt;
 }

@@ -8,18 +8,20 @@ import '../repository/database/database.dart';
 import 'database_event.dart';
 import 'database_watcher.dart';
 
-@injectable
-class RequestBloc extends Bloc<RequestEvent, RequestState> {
+@singleton
+class RequestWatcher extends Bloc<RequestEvent, RequestState> {
   final IWikipediaRepository _wc;
   final MyDatabase database;
   final DatabaseWatcher watcher;
 
-  RequestBloc(this._wc, this.database, this.watcher) : super(IsIdle()) {
+  RequestWatcher(this._wc, this.database, this.watcher) : super(IsIdle()) {
     on<RequestStringTerm>((event, emit) async {
         emit(InProgress());
         final received = await _wc.getTriviaByString(event.searchTerm);
         received.fold(
-                (failure) => emit(HasFailed("ADD FAILED MESSAGE")),
+                (failure) => {
+                  emit(HasFailed(failure.message))
+                },
                 (trivia) async => {
                   emit(IsSuccessful(trivia)),
                   database.triviaDao.insertTrivia(trivia),

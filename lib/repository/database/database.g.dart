@@ -1786,20 +1786,20 @@ class $TriviaClassTable extends TriviaClass
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _searchTermMeta =
       const VerificationMeta('searchTerm');
   @override
   late final GeneratedColumn<String> searchTerm = GeneratedColumn<String>(
-      'search_term', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+      'search_term', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
   @override
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
-      'description', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
+      'description', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, searchTerm, description];
   @override
@@ -1813,18 +1813,24 @@ class $TriviaClassTable extends TriviaClass
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
     }
     if (data.containsKey('search_term')) {
       context.handle(
           _searchTermMeta,
           searchTerm.isAcceptableOrUnknown(
               data['search_term']!, _searchTermMeta));
+    } else if (isInserting) {
+      context.missing(_searchTermMeta);
     }
     if (data.containsKey('description')) {
       context.handle(
           _descriptionMeta,
           description.isAcceptableOrUnknown(
               data['description']!, _descriptionMeta));
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
     }
     return context;
   }
@@ -1836,11 +1842,11 @@ class $TriviaClassTable extends TriviaClass
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Trivia(
       id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id']),
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       searchTerm: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}search_term']),
+          .read(DriftSqlType.string, data['${effectivePrefix}search_term'])!,
       description: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+          .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
     );
   }
 
@@ -1851,34 +1857,25 @@ class $TriviaClassTable extends TriviaClass
 }
 
 class Trivia extends DataClass implements Insertable<Trivia> {
-  final String? id;
-  final String? searchTerm;
-  final String? description;
-  const Trivia({this.id, this.searchTerm, this.description});
+  final String id;
+  final String searchTerm;
+  final String description;
+  const Trivia(
+      {required this.id, required this.searchTerm, required this.description});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['id'] = Variable<String>(id);
-    }
-    if (!nullToAbsent || searchTerm != null) {
-      map['search_term'] = Variable<String>(searchTerm);
-    }
-    if (!nullToAbsent || description != null) {
-      map['description'] = Variable<String>(description);
-    }
+    map['id'] = Variable<String>(id);
+    map['search_term'] = Variable<String>(searchTerm);
+    map['description'] = Variable<String>(description);
     return map;
   }
 
   TriviaClassCompanion toCompanion(bool nullToAbsent) {
     return TriviaClassCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      searchTerm: searchTerm == null && nullToAbsent
-          ? const Value.absent()
-          : Value(searchTerm),
-      description: description == null && nullToAbsent
-          ? const Value.absent()
-          : Value(description),
+      id: Value(id),
+      searchTerm: Value(searchTerm),
+      description: Value(description),
     );
   }
 
@@ -1886,29 +1883,26 @@ class Trivia extends DataClass implements Insertable<Trivia> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Trivia(
-      id: serializer.fromJson<String?>(json['Id']),
-      searchTerm: serializer.fromJson<String?>(json['SearchTerm']),
-      description: serializer.fromJson<String?>(json['Description']),
+      id: serializer.fromJson<String>(json['Id']),
+      searchTerm: serializer.fromJson<String>(json['SearchTerm']),
+      description: serializer.fromJson<String>(json['Description']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'Id': serializer.toJson<String?>(id),
-      'SearchTerm': serializer.toJson<String?>(searchTerm),
-      'Description': serializer.toJson<String?>(description),
+      'Id': serializer.toJson<String>(id),
+      'SearchTerm': serializer.toJson<String>(searchTerm),
+      'Description': serializer.toJson<String>(description),
     };
   }
 
-  Trivia copyWith(
-          {Value<String?> id = const Value.absent(),
-          Value<String?> searchTerm = const Value.absent(),
-          Value<String?> description = const Value.absent()}) =>
+  Trivia copyWith({String? id, String? searchTerm, String? description}) =>
       Trivia(
-        id: id.present ? id.value : this.id,
-        searchTerm: searchTerm.present ? searchTerm.value : this.searchTerm,
-        description: description.present ? description.value : this.description,
+        id: id ?? this.id,
+        searchTerm: searchTerm ?? this.searchTerm,
+        description: description ?? this.description,
       );
   @override
   String toString() {
@@ -1932,19 +1926,21 @@ class Trivia extends DataClass implements Insertable<Trivia> {
 }
 
 class TriviaClassCompanion extends UpdateCompanion<Trivia> {
-  final Value<String?> id;
-  final Value<String?> searchTerm;
-  final Value<String?> description;
+  final Value<String> id;
+  final Value<String> searchTerm;
+  final Value<String> description;
   const TriviaClassCompanion({
     this.id = const Value.absent(),
     this.searchTerm = const Value.absent(),
     this.description = const Value.absent(),
   });
   TriviaClassCompanion.insert({
-    this.id = const Value.absent(),
-    this.searchTerm = const Value.absent(),
-    this.description = const Value.absent(),
-  });
+    required String id,
+    required String searchTerm,
+    required String description,
+  })  : id = Value(id),
+        searchTerm = Value(searchTerm),
+        description = Value(description);
   static Insertable<Trivia> custom({
     Expression<String>? id,
     Expression<String>? searchTerm,
@@ -1958,9 +1954,9 @@ class TriviaClassCompanion extends UpdateCompanion<Trivia> {
   }
 
   TriviaClassCompanion copyWith(
-      {Value<String?>? id,
-      Value<String?>? searchTerm,
-      Value<String?>? description}) {
+      {Value<String>? id,
+      Value<String>? searchTerm,
+      Value<String>? description}) {
     return TriviaClassCompanion(
       id: id ?? this.id,
       searchTerm: searchTerm ?? this.searchTerm,

@@ -26,22 +26,23 @@ class WikipediaRepository implements IWikipediaRepository {
   @override
   Future<Either<WikipediaFailure, Trivia>> getMobileSectionLead(
       int year) async {
-
-    final wikiService = chopper.getService<WikipediaService>();
-    final Response<WikipediaMobileSectionResponse> wikipediaResponse = await wikiService.getMobileSectionLeadByString(year.toString());
-
-    if (wikipediaResponse.isSuccessful) {
-        try {
-          WikipediaMobileSectionResponse? res = wikipediaResponse.body;
+    try {
+      final wikiService = chopper.getService<WikipediaService>();
+      final Response<WikipediaMobileSectionResponse> wikipediaResponse = await wikiService.getMobileSectionLead(year);
+      try {
+        if (wikipediaResponse.isSuccessful) {
           return right(Trivia(
               id: const Uuid().v4(),
               searchTerm: year.toString(),
-              description: res?.sections.toString()));
-        } catch (e) {
-            return left(const WikipediaFailure.unexpected());
+              description: wikipediaResponse.body!.sections.toString()));
+        } else {
+          return left(FileNotFound("Article not found"));
         }
-    } else {
-    return left(const WikipediaFailure.serverError());
+      } catch (e) {
+        return left(Unexpected("Unknown error"));
+      }
+    } catch (e) {
+      return left(ServerError("Server not reachable"));
     }
   }
 
@@ -52,15 +53,22 @@ class WikipediaRepository implements IWikipediaRepository {
       final wikiService = chopper.getService<WikipediaService>();
       final Response<WikipediaMobileSectionResponse> wikipediaResponse = await wikiService.getMobileSectionLeadByString(searchTerm);
       try {
-        return right(Trivia(
-            id: const Uuid().v4(),
-            searchTerm: searchTerm,
-            description: wikipediaResponse.body?.sections.toString()));
+        if (wikipediaResponse.isSuccessful) {
+          var sec = wikipediaResponse.body!.sections;
+          var result = sec.map((e) => e.text);
+          result.toString();
+          return right(Trivia(
+              id: const Uuid().v4(),
+              searchTerm: searchTerm,
+              description: result.toString()));
+        } else {
+          return left(FileNotFound("Article not found"));
+        }
       } catch (e) {
-        return left(const WikipediaFailure.unexpected());
+        return left(Unexpected("Unknown error"));
       }
     } catch (e) {
-    return left(const WikipediaFailure.serverError());
+      return left(ServerError("Server not reachable"));
     }
   }
 
@@ -70,15 +78,19 @@ class WikipediaRepository implements IWikipediaRepository {
       final wikiService = chopper.getService<WikipediaService>();
       final Response<WikipediaResponse> wikipediaResponse = await wikiService.getTriviaByString(year.toString());
       try {
-        return right(Trivia(
-            id: const Uuid().v4(),
-            searchTerm: year.toString(),
-            description: wikipediaResponse.body?.extract));
+        if (wikipediaResponse.isSuccessful) {
+          return right(Trivia(
+              id: const Uuid().v4(),
+              searchTerm: year.toString(),
+              description: wikipediaResponse.body!.extract));
+        } else {
+          return left(FileNotFound("Article not found"));
+        }
       } catch (e) {
-        return left(const WikipediaFailure.unexpected());
+        return left(Unexpected("Unknown error"));
       }
     } catch (e) {
-    return left(const WikipediaFailure.serverError());
+      return left(ServerError("Server not reachable"));
     }
   }
 
@@ -89,15 +101,19 @@ class WikipediaRepository implements IWikipediaRepository {
       final wikiService = chopper.getService<WikipediaService>();
       final Response<WikipediaResponse> wikipediaResponse = await wikiService.getTriviaByString(searchTerm);
       try {
-        return right(Trivia(
-            id: const Uuid().v4(),
-            searchTerm: searchTerm,
-            description: wikipediaResponse.body?.extract));
+        if (wikipediaResponse.isSuccessful) {
+          return right(Trivia(
+              id: const Uuid().v4(),
+              searchTerm: searchTerm,
+              description: wikipediaResponse.body!.extract));
+        } else {
+          return left(FileNotFound("Article not found"));
+        }
       } catch (e) {
-        return left(const WikipediaFailure.unexpected());
+        return left(Unexpected("Unknown error"));
       }
     } catch (e) {
-      return left(const WikipediaFailure.serverError());
+      return left(ServerError("Server not reachable"));
     }
   }
 }

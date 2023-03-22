@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:useless_trivia/application/request_watcher.dart';
 import '../../../application/request_event.dart';
+import '../../../application/request_state.dart';
 import '../../../injection.dart';
+import '../../../util/util.dart';
 
 class YearForm extends StatefulWidget {
   const YearForm({super.key});
@@ -32,30 +35,34 @@ class _YearFormState extends State<YearForm> {
         textAlign: TextAlign.center,
         keyboardType: TextInputType.multiline,
         decoration: const InputDecoration(
-            filled: true, hintText: 'Voer een jaartal in.'),
+            filled: true, hintText: 'Voer een zoekterm in.'),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final RequestBloc requestBloc = getIt<RequestBloc>();
+    final RequestWatcher requestBloc = getIt<RequestWatcher>();
     String searchTerm;
 
-    return Column(children: <Widget>[
-      Row(children: <Widget>[
-        Expanded(child: buildTextField()),
-        ElevatedButton(
-          child: const Text('Zoek'),
-          onPressed: () async => {
-            searchTerm = myController.value.text.toString(),
-            requestBloc.add(RequestStringTerm(searchTerm)),
-          },
-        )
-      ]),
-    ]);
+    return BlocBuilder<RequestWatcher, RequestState>(builder: (context, state) {
+      print("YEAR FORM" + state.toString());
+      if (state is HasFailed) {
+        return AlertDialogUtil.showAlertDialog(context, "Failure", state.failureMessage, false);
+      } else {
+        return Column(children: <Widget>[
+          Row(children: <Widget>[
+            Expanded(child: buildTextField()),
+            ElevatedButton(
+              child: const Text('Zoek'),
+              onPressed: () async => {
+                searchTerm = myController.value.text.toString(),
+                requestBloc.add(RequestStringTerm(searchTerm)),
+              },
+            )
+          ]),
+        ]);
+      }
+    });
   }
-
-
 }
-

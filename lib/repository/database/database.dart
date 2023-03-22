@@ -106,11 +106,11 @@ class Messages extends Table {
 @DataClassName("Trivia")
 class TriviaClass extends Table {
   @JsonKey("Id")
-  TextColumn get id => text().nullable()();
+  TextColumn get id => text()();
   @JsonKey("SearchTerm")
-  TextColumn get searchTerm => text().nullable()();
+  TextColumn get searchTerm => text()();
   @JsonKey("Description")
-  TextColumn get description => text().nullable()();
+  TextColumn get description => text()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -122,7 +122,7 @@ class MyDatabase extends _$MyDatabase {
   MyDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 }
 
 LazyDatabase _openConnection() {
