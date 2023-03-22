@@ -5,7 +5,7 @@ import 'database_event.dart';
 import 'database_state.dart';
 
 @singleton
-class DatabaseWatcher extends Bloc<NewDatabaseEvent, DatabaseState> {
+class DatabaseWatcher extends Bloc<DatabaseEvent, DatabaseState> {
   final MyDatabase _database;
 
   DatabaseWatcher(this._database) : super(IsLoading()) {

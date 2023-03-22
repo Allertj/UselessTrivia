@@ -10,16 +10,16 @@ import '../repository/database/database.dart';
 //   const factory NewDatabaseEvent.changed() = Changed;
 // }
 
-class NewDatabaseEvent {}
+class DatabaseEvent {}
 
-class Inserted extends NewDatabaseEvent {
+class Inserted extends DatabaseEvent {
   final Trivia newTrivia;
 
   Inserted(this.newTrivia);
 }
 
-class Deleted extends NewDatabaseEvent {}
+class Deleted extends DatabaseEvent {}
 
-class Changed extends NewDatabaseEvent {}
+class Changed extends DatabaseEvent {}
 
-class AskForCurrentEntries extends NewDatabaseEvent {}
+class AskForCurrentEntries extends DatabaseEvent {}

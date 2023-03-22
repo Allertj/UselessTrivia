@@ -9,8 +9,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 abstract class RequestEvent {}
 
-class RequestStringTerm extends RequestEvent {
+class RequestSummary extends RequestEvent {
   final String searchTerm;
 
-  RequestStringTerm(this.searchTerm);
+  RequestSummary(this.searchTerm);
+}
+
+class RequestLead extends RequestEvent {
+  final String searchTerm;
+
+  RequestLead(this.searchTerm);
 }

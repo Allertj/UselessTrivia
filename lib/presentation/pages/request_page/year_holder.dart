@@ -1,17 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:useless_trivia/application/request_event.dart';
+import 'package:useless_trivia/application/request_state.dart';
 import 'package:useless_trivia/domain/i_wikipedia_client.dart';
 import 'package:useless_trivia/util/util.dart';
 
 import '../../../application/database_state.dart';
 import '../../../application/database_watcher.dart';
+import '../../../application/request_watcher.dart';
 import '../../../injection.dart';
 
 class SavedYearsHolder extends StatelessWidget {
   SavedYearsHolder({super.key});
 
   final wikipediaClient = getIt<IWikipediaRepository>();
+  final RequestWatcher requestBloc = getIt<RequestWatcher>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +23,7 @@ class SavedYearsHolder extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Opgeslagen artikelen'),
         ),
-        body: BlocConsumer<DatabaseWatcher, DatabaseState>(
-          listener: (context, state) {
-
-          },
+        body: BlocBuilder<DatabaseWatcher, DatabaseState>(
           builder: (context, state) {
             if (state is IsLoading) {
               return Container(
@@ -61,31 +62,46 @@ class SavedYearsHolder extends StatelessWidget {
                     String title =
                         current.entries[position].searchTerm.toString();
                     return Card(
-                      margin: const EdgeInsets.all(5.0),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      color: Colors.grey.withOpacity(0.25),
-                      child: ListTile(
-                        title: Text(title),
-                        subtitle: Text(current.entries[position].description),
-                        onTap: () async {
-                          var result = await wikipediaClient
-                              .getMobileSectionLeadByString(title);
-                          result.fold(
-                              (failure) async => {
-                                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                                      AlertDialogUtil.showAlertDialog(
-                                      context, title, failure.message, false);
-                                    })
-                                  },
-                              (wholeArticle) => AlertDialogUtil.showAlertDialog(
+                        margin: const EdgeInsets.all(5.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        color: Colors.grey.withOpacity(0.25),
+                        child: BlocListener<RequestWatcher, RequestState>(
+                          listener: (context, state) {
+                            if (state is IsSuccessful) {
+                              AlertDialogUtil.showAlertDialog(
                                   context,
-                                  wholeArticle.searchTerm,
-                                  wholeArticle.description,
-                                  true));
-                        },
-                      ),
-                    );
+                                  state.result.searchTerm,
+                                  state.result.description,
+                                  true);
+                            } else if (state is HasFailed) {
+                              AlertDialogUtil.showAlertDialog(context, "failed",
+                                  state.failureMessage, false);
+                            }
+                          },
+                          child: ListTile(
+                            title: Text(title),
+                            subtitle:
+                                Text(current.entries[position].description),
+                            onTap: () async {
+                              requestBloc.add(RequestLead(title));
+                              // var result = await wikipediaClient
+                              //     .getMobileSectionLeadByString(title);
+                              // result.fold(
+                              //     (failure) async => {
+                              //           WidgetsBinding.instance.addPostFrameCallback((_) {
+                              //             AlertDialogUtil.showAlertDialog(
+                              //             context, title, failure.message, false);
+                              //           })
+                              //         },
+                              //     (wholeArticle) => AlertDialogUtil.showAlertDialog(
+                              //         context,
+                              //         wholeArticle.searchTerm,
+                              //         wholeArticle.description,
+                              //         true));
+                            },
+                          ),
+                        ));
                   });
             }
           },

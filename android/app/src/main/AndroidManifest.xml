@@ -2,8 +2,10 @@
     package="com.data2track.useless_trivia">
    <application
         android:label="useless_trivia"
+
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBETLzUl5FW0UwtiJenivSSKkgB05T-Qlg" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -24,19 +24,35 @@ class RequestPage extends StatelessWidget {
         appBar: AppBar(title: const Text("UselessTrivia"), actions: <Widget>[
           IconButton(
               icon: const Icon(
-                Icons.settings,
+                Icons.place,
                 color: Colors.white,
               ),
               onPressed: () {
-                  router.push(AlternativeMapRoute());
-                // );
+                router.push(AlternativeMapRoute());
+              }),
+          IconButton(
+              icon: const Icon(
+                Icons.directions_transit,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                router.push(const MapRoute());
+              }),
+          IconButton(
+              icon: const Icon(
+                Icons.dashboard,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                router.push(const DashboardRoute());
               })
         ]),
         body: Center(
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => getIt<DatabaseWatcher>()..add(AskForCurrentEntries()),
+                create: (context) =>
+                    getIt<DatabaseWatcher>()..add(AskForCurrentEntries()),
               ),
               BlocProvider(
                 create: (context) => getIt<RequestWatcher>(),
@@ -44,7 +60,10 @@ class RequestPage extends StatelessWidget {
             ],
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[YearForm(), Expanded(child: SavedYearsHolder())],
+              children: <Widget>[
+                YearForm(),
+                Expanded(child: SavedYearsHolder())
+              ],
             ),
           ),
         ));

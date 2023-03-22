@@ -46,7 +46,6 @@ class _YearFormState extends State<YearForm> {
     String searchTerm;
 
     return BlocBuilder<RequestWatcher, RequestState>(builder: (context, state) {
-      print("YEAR FORM" + state.toString());
       if (state is HasFailed) {
         return AlertDialogUtil.showAlertDialog(context, "Failure", state.failureMessage, false);
       } else {
@@ -57,7 +56,7 @@ class _YearFormState extends State<YearForm> {
               child: const Text('Zoek'),
               onPressed: () async => {
                 searchTerm = myController.value.text.toString(),
-                requestBloc.add(RequestStringTerm(searchTerm)),
+                requestBloc.add(RequestSummary(searchTerm)),
               },
             )
           ]),

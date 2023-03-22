@@ -15,19 +15,25 @@ class RequestWatcher extends Bloc<RequestEvent, RequestState> {
   final DatabaseWatcher watcher;
 
   RequestWatcher(this._wc, this.database, this.watcher) : super(IsIdle()) {
-    on<RequestStringTerm>((event, emit) async {
-        emit(InProgress());
-        final received = await _wc.getTriviaByString(event.searchTerm);
-        received.fold(
-                (failure) => {
-                  emit(HasFailed(failure.message))
-                },
-                (trivia) async => {
-                  emit(IsSuccessful(trivia)),
-                  database.triviaDao.insertTrivia(trivia),
-                  watcher.add(Inserted(trivia))
-                }
-        );
+    on<RequestSummary>((event, emit) async {
+      emit(InProgress());
+      final received = await _wc.getTriviaByString(event.searchTerm);
+      received.fold(
+          (failure) => {emit(HasFailed(failure.message))},
+          (trivia) async => {
+                emit(IsSuccessful(trivia)),
+                database.triviaDao.insertTrivia(trivia),
+                watcher.add(Inserted(trivia))
+              });
+    });
+    on<RequestLead>((event, emit) async {
+      emit(InProgress());
+      final received = await _wc.getMobileSectionLeadByString(event.searchTerm);
+      received.fold(
+          (failure) => {emit(HasFailed(failure.message))},
+          (trivia) async => {
+                emit(IsSuccessful(trivia)),
+          });
     });
   }
 }

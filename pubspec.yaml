@@ -72,14 +72,13 @@ dependencies:
 #  flutter_stetho: ^0.5.2 # The plugin `flutter_stetho` uses a deprecated version of the Android embedding.
 
   # Domain Driven Design
-#  rxdart: ^0.24.1 -- Not checked
+  rxdart: 0.27.7
   dartz: 0.10.1
-#  kt_dart: ^0.7.0+1 -- Not checked
+  kt_dart: 1.1.0
   meta: 1.8.0
   flutter_bloc: 8.1.2
   freezed_annotation: 2.2.0
-#  flutter_hooks: ^0.13.1 -- Not checked
-
+  flutter_hooks: 0.18.6
 
   # Just included for this project.
   path:
@@ -92,24 +91,20 @@ dependencies:
   freezed: 2.3.2
 
 
-# -- Not checked yet.
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  retrofit_generator: '>=5.0.0 <6.0.0'
+  lint: 2.0.1
   build_runner: '>=2.3.0 <4.0.0'
   json_serializable: '>=4.4.0'
   drift_dev: ^2.5.2
   injectable_generator: 2.1.4
   chopper_generator: 6.0.0
   auto_route_generator: 6.0.0
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  import_sorter: 4.6.0
+  flutter_launcher_icons: 0.12.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
