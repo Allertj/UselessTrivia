@@ -1,17 +1,22 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:useless_trivia/application/database_event.dart';
 import 'package:useless_trivia/application/database_watcher.dart';
 import 'package:useless_trivia/application/request_watcher.dart';
 import 'package:useless_trivia/injection.dart';
-import 'package:useless_trivia/presentation/google_maps/map_sample.dart';
-import 'package:useless_trivia/presentation/streepmap/streetmap.dart';
-import 'package:useless_trivia/presentation/year_holder.dart';
-import 'package:useless_trivia/presentation/request_bloc.dart';
-import 'mycustomform.dart';
+import 'package:useless_trivia/presentation/pages/request_page/year_holder.dart';
+import 'package:useless_trivia/presentation/routes/router.gr.dart';
+import '../../routes/router.dart';
+import 'year_form.dart';
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+@RoutePage()
+class RequestPage extends StatelessWidget {
+  RequestPage({super.key});
+
+  final router = getIt<AppRouter>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +28,15 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  // MaterialPageRoute(builder: (context) => MapSample()),
-                  MaterialPageRoute(builder: (context) => StreetMap()),
-                );
+                  router.push(AlternativeMapRoute());
+                // );
               })
         ]),
         body: Center(
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => getIt<TriviaBloc>(),
-              ),
-              BlocProvider(
-                create: (context) => getIt<DatabaseWatcher>(),
+                create: (context) => getIt<DatabaseWatcher>()..add(AskForCurrentEntries()),
               ),
               BlocProvider(
                 create: (context) => getIt<RequestBloc>(),
@@ -45,7 +44,7 @@ class MyHomePage extends StatelessWidget {
             ],
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[MyCustomForm(), Expanded(child: YearHolder())],
+              children: <Widget>[YearForm(), Expanded(child: SavedYearsHolder())],
             ),
           ),
         ));

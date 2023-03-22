@@ -7,9 +7,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 //   const factory RequestEvent.madeRequest(String searchTerm) = MadeRequest;
 // }
 
-abstract class RequestEvent1 {}
+abstract class RequestEvent {}
 
-class RequestStringTerm1 extends RequestEvent1  {
+class RequestStringTerm extends RequestEvent {
   final String searchTerm;
-  RequestStringTerm1(this.searchTerm);
+
+  RequestStringTerm(this.searchTerm);
 }

@@ -1,9 +1,14 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
-class StreetMap extends StatelessWidget {
-  StreetMap({super.key});
+import '../../../injection.dart';
+import '../../routes/router.dart';
+
+@RoutePage()
+class AlternativeMapPage extends StatelessWidget {
+  final router = getIt<AppRouter>();
 
   final MapController mapController = MapController(
     initMapWithUserPosition: false,
@@ -15,7 +20,7 @@ class StreetMap extends StatelessWidget {
       west: 5.9559113,
     ),
   );
-
+  AlternativeMapPage({super.key});
 // or
 
   // final MapController controller = MapController.withPosition(
@@ -34,7 +39,7 @@ class StreetMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Overzicht'),
+        title: const Text('Kaart'),
       ),
       body: Center(
         child: Column(
@@ -86,12 +91,11 @@ class StreetMap extends StatelessWidget {
                 ),
               )),
             )),
-            // const SizedBox(height: 300, child: SampleAppPage()),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                router.pop();
               },
-              child: Text('Open route'),
+              child: Text('Terug naar overzicht'),
             ),
           ],
         ),

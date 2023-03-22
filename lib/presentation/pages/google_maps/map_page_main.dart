@@ -1,18 +1,20 @@
 
 import 'dart:async';
 
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapSample extends StatefulWidget {
-  const MapSample({Key? key}) : super(key: key);
+@RoutePage()
+class MapPage extends StatefulWidget {
+  const MapPage({Key? key}) : super(key: key);
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<MapPage> createState() => MapPageState();
 }
 
-class MapSampleState extends State<MapSample> {
+class MapPageState extends State<MapPage> {
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
 

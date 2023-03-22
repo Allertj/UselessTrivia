@@ -19,27 +19,80 @@ dependencies:
   flutter:
     sdk: flutter
 
-  path:
-  uuid: 3.0.7
-
-  built_value: ^8.0.0
-  json_annotation: ^4.1.0
-  hive_generator: ^2.0.0
-  flutter_html: 2.2.1
-  flutter_osm_plugin: ^0.51.0
-  sqlite3_flutter_libs: ^0.5.0
-  flutter_bloc: 8.1.2
-  drift: ^2.5.0
-  dartz: 0.10.1
-  path_provider: ^2.0.0
-  freezed: 2.3.2
-  injectable: 2.1.0
-  google_maps_flutter: 2.2.5
-  chopper: 6.1.1
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
+  # Firebase
+  firebase_core: 2.8.0
+  firebase_analytics: 10.1.6
+  firebase_crashlytics: 3.0.17
+  firebase_messaging: 14.3.0
+  firebase_remote_config: 3.0.15
+
+  # Database & requests
+  drift: ^2.5.0
+  chopper: 6.1.1
+  json_annotation: ^4.1.0
+  path_provider: ^2.0.0
+  sqlite3_flutter_libs: ^0.5.0
+
+  # UI
+  flutter_svg: 2.0.4 # lower version include in flutter_html
+  font_awesome_flutter: 10.4.0
+  country_icons: 2.0.2
+  flutter_map: 3.1.0
+  flutter_map_marker_cluster: 1.1.0
+  material_design_icons_flutter: 6.0.7096
+  bubble: 1.2.1 # 2 years old, Dart 3 compatible.
+  google_maps_flutter: 2.2.5
+  webview_flutter: 4.0.7 # lower version include in flutter_html
+  cached_network_image: 3.2.3
+  another_flushbar: 1.12.29 # flushbar: ^1.10.4 # could not find a more recent version, this is basically the same library with null safety.
+  auto_route: 6.0.1
+  pref: 2.7.1 # preferences: ^5.2.0 package is discontinued, replaced by pref.
+  theme_provider: 0.5.0 # 2 years old, but has null-safety.
+  faker: 2.1.0
+
+  # Dependency injection
+  injectable: 2.1.0
+#  get_it: ^4.0.4  # not needed because of other dependencies. This dependency uses 7.2.0.
+
+  # Native functionality
+  shared_preferences: 2.0.20
+  url_launcher: 6.1.10
+  flutter_local_notifications: 13.0.0 # lower version include in flutter_html
+  maps_launcher: 2.2.0
+  package_info_plus: 3.0.3 # package_info 2.0.2 is 22 months old and deprecated. Replaced by package_info_plus.
+
+  # Data manipulation
+  intl: 0.18.0
+  latlong2: 0.8.1 #  latlong: ^0.6.1 is very old, depends on logging
+  fluster: 1.2.0 # 23 month old, Dart 3 compatible.
+
+#   Quality control
+#  flutter_stetho: ^0.5.2 # The plugin `flutter_stetho` uses a deprecated version of the Android embedding.
+
+  # Domain Driven Design
+#  rxdart: ^0.24.1 -- Not checked
+  dartz: 0.10.1
+#  kt_dart: ^0.7.0+1 -- Not checked
+  meta: 1.8.0
+  flutter_bloc: 8.1.2
+  freezed_annotation: 2.2.0
+#  flutter_hooks: ^0.13.1 -- Not checked
+
+
+  # Just included for this project.
+  path:
+  uuid: 3.0.7
+  built_value: ^8.0.0
+  hive_generator: ^2.0.0
+#  flutter_html: 2.2.1
+  flutter_widget_from_html_core: 0.10.0
+  flutter_osm_plugin: ^0.51.0
+  freezed: 2.3.2
+
+
+# -- Not checked yet.
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -50,6 +103,7 @@ dev_dependencies:
   drift_dev: ^2.5.2
   injectable_generator: 2.1.4
   chopper_generator: 6.0.0
+  auto_route_generator: 6.0.0
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

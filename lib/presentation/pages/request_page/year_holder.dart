@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../application/database_state.dart';
-import '../application/database_watcher.dart';
+import '../../../application/database_state.dart';
+import '../../../application/database_watcher.dart';
+import '../../../injection.dart';
 
-class YearHolder extends StatelessWidget {
-  const YearHolder({super.key});
+class SavedYearsHolder extends StatelessWidget {
+  const SavedYearsHolder({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +17,14 @@ class YearHolder extends StatelessWidget {
         ),
         body: BlocBuilder<DatabaseWatcher, DatabaseState>(
             builder: (context, state) {
-              print(state);
                 if(state is IsLoading) {
-                  return const Text("Laden");
+                  return Container(
+                      margin: const EdgeInsets.all(12),
+                      child: const Text(textAlign: TextAlign.center, "Laden"));
                 } else if (state is IsEmpty) {
-                  return const Text("Leeg");
+                  return Container(
+                      margin: const EdgeInsets.all(12),
+                      child: const Text(textAlign: TextAlign.center, "Leeg"));
                 } else {
                   final current = state as HasEntries;
                   return ListView.builder(

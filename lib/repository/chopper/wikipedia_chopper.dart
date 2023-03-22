@@ -1,6 +1,6 @@
 import "dart:async";
 import 'package:chopper/chopper.dart';
-import 'package:useless_trivia/repository/retrofit/responses.dart';
+import 'package:useless_trivia/repository/chopper/responses.dart';
 
 part "wikipedia_chopper.chopper.dart";
 

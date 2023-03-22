@@ -1,19 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:useless_trivia/application/request_watcher.dart';
-import 'package:useless_trivia/presentation/request_bloc.dart';
+import '../../../application/request_event.dart';
+import '../../../injection.dart';
 
-import '../application/request_event.dart';
-
-class MyCustomForm extends StatefulWidget {
-  const MyCustomForm({super.key});
+class YearForm extends StatefulWidget {
+  const YearForm({super.key});
 
   @override
-  State<MyCustomForm> createState() => _MyCustomFormState();
+  State<YearForm> createState() => _YearFormState();
 }
 
-class _MyCustomFormState extends State<MyCustomForm> {
+class _YearFormState extends State<YearForm> {
   final myController = TextEditingController();
 
   @override
@@ -41,8 +39,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    final TriviaBloc triviaBloc = BlocProvider.of<TriviaBloc>(context);
-    final RequestBloc requestBloc = BlocProvider.of<RequestBloc>(context);
+    final RequestBloc requestBloc = getIt<RequestBloc>();
     String searchTerm;
 
     return Column(children: <Widget>[
@@ -52,8 +49,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
           child: const Text('Zoek'),
           onPressed: () async => {
             searchTerm = myController.value.text.toString(),
-            // triviaBloc.add(RequestStringTerm(searchTerm))
-            requestBloc.add(RequestStringTerm1(searchTerm)),
+            requestBloc.add(RequestStringTerm(searchTerm)),
           },
         )
       ]),

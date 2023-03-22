@@ -14,8 +14,11 @@ import '../repository/database/database.dart';
 abstract class DatabaseState {}
 
 class IsLoading extends DatabaseState {}
+
 class IsEmpty extends DatabaseState {}
+
 class HasEntries extends DatabaseState {
   final List<Trivia> entries;
+
   HasEntries(this.entries);
 }

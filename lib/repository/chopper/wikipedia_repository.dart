@@ -1,6 +1,6 @@
 import 'package:chopper/chopper.dart';
-import 'package:useless_trivia/repository/retrofit/responses.dart';
-import 'package:useless_trivia/repository/retrofit/wikipedia_chopper.dart';
+import 'package:useless_trivia/repository/chopper/responses.dart';
+import 'package:useless_trivia/repository/chopper/wikipedia_chopper.dart';
 import 'package:dartz/dartz.dart';
 import 'package:uuid/uuid.dart';
 import 'package:injectable/injectable.dart';

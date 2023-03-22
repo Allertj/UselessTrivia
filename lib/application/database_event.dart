@@ -14,8 +14,12 @@ class NewDatabaseEvent {}
 
 class Inserted extends NewDatabaseEvent {
   final Trivia newTrivia;
+
   Inserted(this.newTrivia);
 }
 
 class Deleted extends NewDatabaseEvent {}
+
 class Changed extends NewDatabaseEvent {}
+
+class AskForCurrentEntries extends NewDatabaseEvent {}
