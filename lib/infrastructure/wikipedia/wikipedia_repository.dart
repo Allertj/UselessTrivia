@@ -116,4 +116,10 @@ class WikipediaRepository implements IWikipediaRepository {
       return left(ServerError("Server not reachable"));
     }
   }
-}
+
+  @override
+  Future<Response> getHtml(String searchTerm) {
+    final wikiService = chopper.getService<WikipediaService>();
+    return wikiService.getHtml(searchTerm);
+  }
+ }

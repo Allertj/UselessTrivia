@@ -63,4 +63,15 @@ class _$WikipediaService extends WikipediaService {
     return client.send<WikipediaMobileSectionResponse,
         WikipediaMobileSectionResponse>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getHtml(String searchTerm) {
+    final Uri $url = Uri.parse('/mobile-html/${searchTerm}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
 }

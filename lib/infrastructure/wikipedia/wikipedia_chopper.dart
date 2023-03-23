@@ -22,4 +22,7 @@ abstract class WikipediaService extends ChopperService {
   @Get(path: '/mobile-sections-lead/{searchTerm}')
   Future<Response<WikipediaMobileSectionResponse>> getMobileSectionLeadByString(@Path("searchTerm") String searchTerm);
 
+  @Get(path: '/mobile-html/{searchTerm}')
+  Future<Response> getHtml(@Path("searchTerm") String searchTerm);
+
 }

@@ -10,12 +10,13 @@ import '../../../application/database/database_state.dart';
 import '../../../application/database/database_watcher.dart';
 import '../../../application/request/request_watcher.dart';
 import '../../../injection.dart';
+import '../../routes/router.dart';
 
 class SavedArticlesHolder extends StatelessWidget {
   SavedArticlesHolder({super.key});
 
-  final wikipediaClient = getIt<IWikipediaRepository>();
   final RequestWatcher requestBloc = getIt<RequestWatcher>();
+  final router = getIt<AppRouter>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +68,30 @@ class SavedArticlesHolder extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0)),
                         color: Colors.grey.withOpacity(0.25),
                         child: BlocListener<RequestWatcher, RequestState>(
+                          listenWhen: (previousState, currentState) {
+                            if (previousState is InProgress) {
+                              // Navigator.pop(context);
+                              // Navigator.of(context).pop();
+                              Navigator.of(context, rootNavigator: true).pop();
+                            }
+                            return true;
+                          },
+
                           listener: (context, state) {
-                            if (state is HasSuccessfullyDownloaded) {
+
+                            if (state is InProgress) {
+                              showDialog(
+                                barrierDismissible: true,
+                                builder: (ctx) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  );
+                                },
+                                context: context,
+                              );
+                            } else if (state is HasSuccessfullyDownloaded) {
                               AlertDialogUtil.showAlertDialog(
                                   context,
                                   state.result.searchTerm,
