@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:useless_trivia/application/request/request_event.dart';
 import 'package:useless_trivia/application/request/request_state.dart';
-import 'package:useless_trivia/domain/wikipedia/i_wikipedia_repository.dart';
 import 'package:useless_trivia/util/util.dart';
 
 import '../../../application/database/database_state.dart';
@@ -11,12 +9,13 @@ import '../../../application/database/database_watcher.dart';
 import '../../../application/request/request_watcher.dart';
 import '../../../injection.dart';
 import '../../routes/router.dart';
+import '../../routes/router.gr.dart';
 
 class SavedArticlesHolder extends StatelessWidget {
   SavedArticlesHolder({super.key});
 
   final RequestWatcher requestBloc = getIt<RequestWatcher>();
-  final router = getIt<AppRouter>();
+  final router2 = getIt<AppRouter>();
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +91,7 @@ class SavedArticlesHolder extends StatelessWidget {
                                 context: context,
                               );
                             } else if (state is HasSuccessfullyDownloaded) {
-                              AlertDialogUtil.showAlertDialog(
-                                  context,
-                                  state.result.searchTerm,
-                                  state.result.description,
-                                  true);
+                              router2.push(ReadRoute(title: state.result.searchTerm, htmlString: state.result.description, ));
                             } else if (state is HasFailed) {
                               AlertDialogUtil.showAlertDialog(context, "failed",
                                   state.failureMessage, false);

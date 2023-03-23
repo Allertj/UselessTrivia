@@ -30,9 +30,6 @@ class RequestWatcher extends Bloc<RequestEvent, RequestState> {
 
     on<RequestLead>((event, emit) async {
       emit(InProgress());
-      final received2 = await _wikiRepository.getHtml(event.searchTerm);
-      print(received2);
-
       final received = await _wikiRepository.getMobileSectionLeadByString(event.searchTerm);
       received.fold(
           (failure) => emit(HasFailed(failure.message)),

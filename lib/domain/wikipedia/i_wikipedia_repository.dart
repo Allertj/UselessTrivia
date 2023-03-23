@@ -1,4 +1,3 @@
-import 'package:chopper/chopper.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../infrastructure/database/database.dart';
@@ -10,5 +9,4 @@ abstract class IWikipediaRepository {
   Future<Either<WikipediaFailure, Trivia>> getTriviaByString(String searchTerm);
   Future<Either<WikipediaFailure, Trivia>> getMobileSectionLead(int year);
   Future<Either<WikipediaFailure, Trivia>> getMobileSectionLeadByString(String searchTerm);
-  Future<Response> getHtml(String searchTerm);
 }

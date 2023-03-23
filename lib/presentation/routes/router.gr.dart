@@ -62,6 +62,7 @@ abstract class $AppRouter extends _i6.RootStackRouter {
         routeData: routeData,
         child: _i5.ReadPage(
           key: args.key,
+          title: args.title,
           htmlString: args.htmlString,
         ),
       );
@@ -160,12 +161,14 @@ class AlternativeMapRouteArgs {
 class ReadRoute extends _i6.PageRouteInfo<ReadRouteArgs> {
   ReadRoute({
     _i8.Key? key,
+    required String title,
     required String htmlString,
     List<_i6.PageRouteInfo>? children,
   }) : super(
           ReadRoute.name,
           args: ReadRouteArgs(
             key: key,
+            title: title,
             htmlString: htmlString,
           ),
           initialChildren: children,
@@ -180,15 +183,18 @@ class ReadRoute extends _i6.PageRouteInfo<ReadRouteArgs> {
 class ReadRouteArgs {
   const ReadRouteArgs({
     this.key,
+    required this.title,
     required this.htmlString,
   });
 
   final _i8.Key? key;
 
+  final String title;
+
   final String htmlString;
 
   @override
   String toString() {
-    return 'ReadRouteArgs{key: $key, htmlString: $htmlString}';
+    return 'ReadRouteArgs{key: $key, title: $title, htmlString: $htmlString}';
   }
 }

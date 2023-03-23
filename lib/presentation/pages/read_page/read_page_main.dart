@@ -5,17 +5,22 @@ import 'package:flutter_html/flutter_html.dart';
 
 @RoutePage()
 class ReadPage extends StatelessWidget {
-  const ReadPage({super.key, required this.htmlString});
+  const ReadPage({super.key, required this.title, required this.htmlString});
 
+  final String title;
   final String htmlString;
-  // final RequestWatcher requestBloc = getIt<RequestWatcher>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Opgeslagen artikelen'),
-        ),
-        body: Html(data: htmlString));
+            leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+            title: Text(title)),
+        body: Container(
+            child: SingleChildScrollView(child: Html(data: htmlString,))));
   }
 }

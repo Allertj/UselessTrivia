@@ -112,6 +112,8 @@ class TriviaClass extends Table {
   TextColumn get searchTerm => text()();
   @JsonKey("Description")
   TextColumn get description => text()();
+  @JsonKey("ImageUrl")
+  TextColumn get imageUrl => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -123,7 +125,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 7;
 }
 
 LazyDatabase _openConnection() {

@@ -13,5 +13,6 @@ class AppRouter extends $AppRouter {
     AutoRoute(path: '/google_maps', page: MapRoute.page),
     AutoRoute(path: '/alternative_map', page: AlternativeMapRoute.page),
     AutoRoute(path: '/dashboard', page: DashboardRoute.page),
+    AutoRoute(path: '/readarticle', page: ReadRoute.page),
   ];
 }
