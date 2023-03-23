@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../application/database_event.dart';
-import '../../../application/database_state.dart';
-import '../../../application/database_watcher.dart';
-import '../../../application/request_watcher.dart';
+import '../../../application/database/database_event.dart';
+import '../../../application/database/database_state.dart';
+import '../../../application/database/database_watcher.dart';
+import '../../../application/request/request_watcher.dart';
 import '../../../injection.dart';
 import '../google_maps/map_page_main.dart';
 import '../google_maps/menu_items.dart';

@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../repository/database/database.dart';
+import '../../infrastructure/database/database.dart';
+
+
 
 // part 'database_state.freezed.dart';
 

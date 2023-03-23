@@ -1990,12 +1990,12 @@ class TriviaClassCompanion extends UpdateCompanion<Trivia> {
   }
 }
 
-abstract class _$MyDatabase extends GeneratedDatabase {
-  _$MyDatabase(QueryExecutor e) : super(e);
+abstract class _$AppDatabase extends GeneratedDatabase {
+  _$AppDatabase(QueryExecutor e) : super(e);
   late final $VehiclesTable vehicles = $VehiclesTable(this);
   late final $MessagesTable messages = $MessagesTable(this);
   late final $TriviaClassTable triviaClass = $TriviaClassTable(this);
-  late final TriviaDao triviaDao = TriviaDao(this as MyDatabase);
+  late final TriviaDao triviaDao = TriviaDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();

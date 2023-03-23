@@ -20,3 +20,9 @@ class RequestLead extends RequestEvent {
 
   RequestLead(this.searchTerm);
 }
+
+class RequestDeletion extends RequestEvent {
+  final String itemToBeDeleted;
+
+  RequestDeletion(this.itemToBeDeleted);
+}

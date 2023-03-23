@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:useless_trivia/application/request_event.dart';
-import 'package:useless_trivia/application/request_state.dart';
-import 'package:useless_trivia/domain/i_wikipedia_client.dart';
+import 'package:useless_trivia/application/request/request_event.dart';
+import 'package:useless_trivia/application/request/request_state.dart';
+import 'package:useless_trivia/domain/wikipedia/i_wikipedia_repository.dart';
 import 'package:useless_trivia/util/util.dart';
 
-import '../../../application/database_state.dart';
-import '../../../application/database_watcher.dart';
-import '../../../application/request_watcher.dart';
+import '../../../application/database/database_state.dart';
+import '../../../application/database/database_watcher.dart';
+import '../../../application/request/request_watcher.dart';
 import '../../../injection.dart';
 
-class SavedYearsHolder extends StatelessWidget {
-  SavedYearsHolder({super.key});
+class SavedArticlesHolder extends StatelessWidget {
+  SavedArticlesHolder({super.key});
 
   final wikipediaClient = getIt<IWikipediaRepository>();
   final RequestWatcher requestBloc = getIt<RequestWatcher>();
@@ -80,6 +80,12 @@ class SavedYearsHolder extends StatelessWidget {
                             }
                           },
                           child: ListTile(
+                            leading: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                requestBloc.add(RequestDeletion(title));
+                              },
+                            ),
                             title: Text(title),
                             subtitle:
                                 Text(current.entries[position].description),

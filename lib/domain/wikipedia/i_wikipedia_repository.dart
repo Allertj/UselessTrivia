@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:useless_trivia/domain/wikipedia_failure.dart';
-import 'package:useless_trivia/repository/database/database.dart';
+
+import '../../infrastructure/database/database.dart';
+import '../../infrastructure/wikipedia/wikipedia_failure.dart';
+
 
 abstract class IWikipediaRepository {
   Future<Either<WikipediaFailure, Trivia>> getTrivia(int year);

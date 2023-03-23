@@ -5,7 +5,8 @@ import 'package:drift/native.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import 'package:useless_trivia/repository/database/trivia_dao.dart';
+import 'package:useless_trivia/domain/database/trivia_dao.dart';
+
 
 part 'database.g.dart';
 
@@ -118,8 +119,8 @@ class TriviaClass extends Table {
 
 @singleton
 @DriftDatabase(tables: [Vehicles, Messages, TriviaClass], daos: [TriviaDao])
-class MyDatabase extends _$MyDatabase {
-  MyDatabase() : super(_openConnection());
+class AppDatabase extends _$AppDatabase {
+  AppDatabase() : super(_openConnection());
 
   @override
   int get schemaVersion => 6;

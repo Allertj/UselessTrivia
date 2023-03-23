@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:useless_trivia/application/request_watcher.dart';
-import '../../../application/request_event.dart';
-import '../../../application/request_state.dart';
+import 'package:useless_trivia/application/request/request_watcher.dart';
+import '../../../application/request/request_event.dart';
+import '../../../application/request/request_state.dart';
 import '../../../injection.dart';
 import '../../../util/util.dart';
 
-class YearForm extends StatefulWidget {
-  const YearForm({super.key});
+class RequestArticleForm extends StatefulWidget {
+  const RequestArticleForm({super.key});
 
   @override
-  State<YearForm> createState() => _YearFormState();
+  State<RequestArticleForm> createState() => _RequestArticleFormState();
 }
 
-class _YearFormState extends State<YearForm> {
+class _RequestArticleFormState extends State<RequestArticleForm> {
   final myController = TextEditingController();
 
   @override
