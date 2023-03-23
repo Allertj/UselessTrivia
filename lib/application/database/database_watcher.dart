@@ -27,5 +27,14 @@ class DatabaseWatcher extends Bloc<DatabaseEvent, DatabaseState> {
         emit(HasEntries(current));
       }
     });
+
+    on<Deleted>((event, emit) async {
+      List<Trivia> current = await _database.triviaDao.selectAllTrivia();
+      if (current.isEmpty) {
+        emit(IsEmpty());
+      } else {
+        emit(HasEntries(current));
+      }
+    });
   }
 }

@@ -6,7 +6,6 @@ import 'package:useless_trivia/application/request/request_state.dart';
 import '../../domain/wikipedia/i_wikipedia_repository.dart';
 import '../../infrastructure/database/database.dart';
 import '../database/database_event.dart';
-import '../database/database_state.dart';
 import '../database/database_watcher.dart';
 
 @singleton
@@ -21,7 +20,7 @@ class RequestWatcher extends Bloc<RequestEvent, RequestState> {
       emit(InProgress());
       final received = await _wikiRepository.getTriviaByString(event.searchTerm);
       received.fold(
-          (failure) => {emit(HasFailed(failure.message))},
+          (failure) => emit(HasFailed(failure.message)),
           (trivia) async => {
                 emit(IsSuccessful(trivia)),
                 database.triviaDao.insertTrivia(trivia),
@@ -33,23 +32,16 @@ class RequestWatcher extends Bloc<RequestEvent, RequestState> {
       emit(InProgress());
       final received = await _wikiRepository.getMobileSectionLeadByString(event.searchTerm);
       received.fold(
-          (failure) => {emit(HasFailed(failure.message))},
-          (trivia) async => {
-                emit(IsSuccessful(trivia)),
-          });
+          (failure) => emit(HasFailed(failure.message)),
+          (trivia) async => emit(HasSuccessfullyDownloaded(trivia)),
+      );
     });
 
     on<RequestDeletion>((event, emit) async {
       emit(InProgress());
-      final result = database.triviaDao.deleteTriviaBySearchTerm(event.itemToBeDeleted);
-      print(result);
+      database.triviaDao.deleteTriviaBySearchTerm(event.itemToBeDeleted);
       emit(IsSuccessfullyDeleted());
-      // final received = await _wikiRepository.getMobileSectionLeadByString(event.searchTerm);
-      // received.fold(
-      //         (failure) => {emit(HasFailed(failure.message))},
-      //         (trivia) async => {
-      //       emit(IsSuccessful(trivia)),
-      //     });
+      watcher.add(Deleted());
     });
   }
 }

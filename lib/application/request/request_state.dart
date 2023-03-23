@@ -24,6 +24,12 @@ class IsSuccessful extends RequestState {
   IsSuccessful(this.result);
 }
 
+class HasSuccessfullyDownloaded extends RequestState {
+  final Trivia result;
+
+  HasSuccessfullyDownloaded(this.result);
+}
+
 class HasFailed extends RequestState {
   final String failureMessage;
 

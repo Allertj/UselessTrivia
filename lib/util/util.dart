@@ -16,8 +16,8 @@ class AlertDialogUtil {
         scrollable: true,
         title: Text(title),
         actions: [okButton],
-        // content: html ? Html(data: message) : Text(message)
-        content: Text(message)
+        content: html ? Html(data: message) : Text(message)
+        // content: Text(message)
     );
 
     showDialog(

@@ -26,23 +26,22 @@ class SavedArticlesHolder extends StatelessWidget {
         body: BlocBuilder<DatabaseWatcher, DatabaseState>(
           builder: (context, state) {
             if (state is IsLoading) {
-              return Container(
-                  child: Center(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const <Widget>[
+              return Center(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const <Widget>[
                     CircularProgressIndicator(),
                     SizedBox(height: 20),
                     Text(textAlign: TextAlign.center, "LADEN")
-                  ])));
+                  ]));
+
             } else if (state is IsEmpty) {
-              return Container(
-                  child: Center(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const <Widget>[
+              return Center(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const <Widget>[
                     Icon(
                       Icons.block,
                       color: Colors.red,
@@ -53,7 +52,8 @@ class SavedArticlesHolder extends StatelessWidget {
                     Text(
                         textAlign: TextAlign.center,
                         "Geen Artikelen beschikbaar")
-                  ])));
+                  ]));
+
             } else {
               final current = state as HasEntries;
               return ListView.builder(
@@ -68,7 +68,7 @@ class SavedArticlesHolder extends StatelessWidget {
                         color: Colors.grey.withOpacity(0.25),
                         child: BlocListener<RequestWatcher, RequestState>(
                           listener: (context, state) {
-                            if (state is IsSuccessful) {
+                            if (state is HasSuccessfullyDownloaded) {
                               AlertDialogUtil.showAlertDialog(
                                   context,
                                   state.result.searchTerm,
@@ -81,7 +81,7 @@ class SavedArticlesHolder extends StatelessWidget {
                           },
                           child: ListTile(
                             leading: IconButton(
-                              icon: Icon(Icons.delete),
+                              icon: const Icon(Icons.delete),
                               onPressed: () {
                                 requestBloc.add(RequestDeletion(title));
                               },
@@ -91,20 +91,6 @@ class SavedArticlesHolder extends StatelessWidget {
                                 Text(current.entries[position].description),
                             onTap: () async {
                               requestBloc.add(RequestLead(title));
-                              // var result = await wikipediaClient
-                              //     .getMobileSectionLeadByString(title);
-                              // result.fold(
-                              //     (failure) async => {
-                              //           WidgetsBinding.instance.addPostFrameCallback((_) {
-                              //             AlertDialogUtil.showAlertDialog(
-                              //             context, title, failure.message, false);
-                              //           })
-                              //         },
-                              //     (wholeArticle) => AlertDialogUtil.showAlertDialog(
-                              //         context,
-                              //         wholeArticle.searchTerm,
-                              //         wholeArticle.description,
-                              //         true));
                             },
                           ),
                         ));
