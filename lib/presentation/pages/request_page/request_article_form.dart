@@ -45,23 +45,31 @@ class _RequestArticleFormState extends State<RequestArticleForm> {
     final RequestWatcher requestBloc = getIt<RequestWatcher>();
     String searchTerm;
 
-    return BlocBuilder<RequestWatcher, RequestState>(builder: (context, state) {
-      if (state is HasFailed) {
-        return AlertDialogUtil.showAlertDialog(context, "Failure", state.failureMessage, false);
-      } else {
-        return Column(children: <Widget>[
-          Row(children: <Widget>[
-            Expanded(child: buildTextField()),
-            ElevatedButton(
-              child: const Text('Zoek'),
-              onPressed: () async => {
-                searchTerm = myController.value.text.toString(),
-                requestBloc.add(RequestSummary(searchTerm)),
-              },
-            )
-          ]),
-        ]);
-      }
-    });
+    return BlocConsumer<RequestWatcher, RequestState>(
+        listener: (context, state) {
+          if (state is HasFailed) {
+            AlertDialogUtil.showAlertDialog(
+                context, "Failure", state.failureMessage, false);
+          }
+        },
+        builder: (context, state) {
+          // if (state is HasFailed) {
+          //   return
+          // } else {
+            return Column(children: <Widget>[
+              Row(children: <Widget>[
+                Expanded(child: buildTextField()),
+                ElevatedButton(
+                  child: const Text('Zoek'),
+                  onPressed: () async =>
+                  {
+                    searchTerm = myController.value.text.toString(),
+                    requestBloc.add(RequestSummary(searchTerm)),
+                  },
+                )
+              ]),
+            ]);
+          // }
+        });
   }
 }

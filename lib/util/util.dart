@@ -8,9 +8,7 @@ class AlertDialogUtil {
     Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () {
-        Navigator.of(context, rootNavigator: true).pop();
-        // Navigator.of(context).pop();
-        // Navigator.of(context, rootNavigator: true).pop('dialog');
+        Navigator.of(context).pop();
       },
     );
 
