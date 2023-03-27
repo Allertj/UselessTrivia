@@ -31,16 +31,3 @@ class Section {
   factory Section.fromJson(Map<String, dynamic> json) => _$SectionFromJson(json);
   Map<String, dynamic> toJson() => _$SectionToJson(this);
 }
-
-// @JsonSerializable()
-// class Image {
-//   String? file;
-//   Map<String, String>? urls;
-//
-//   Image({required this.file, required this.urls});
-//
-//   factory Image.fromJson(Map<String, dynamic> json) =>
-//       _$ImageFromJson(json);
-//
-//   Map<String, dynamic> toJson() => _$ImageToJson(this);
-// }

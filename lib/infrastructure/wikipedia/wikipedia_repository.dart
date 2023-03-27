@@ -54,18 +54,10 @@ class WikipediaRepository implements IWikipediaRepository {
       final Response<WikipediaMobileSectionResponse> wikipediaResponse = await wikiService.getMobileSectionLeadByString(searchTerm);
       try {
         if (wikipediaResponse.isSuccessful) {
-          // var imageData = wikipediaResponse.body!.image;
           var result = wikipediaResponse.body!.sections.map((section) => section.text);
-          String? imageUrl;
-          // if (imageData != null && imageData.urls?.containsKey("1024") != null) {
-          // try {
-          //     imageUrl = imageData?.urls!["1024"];
-          // } catch (e) {}
-          // result.toString();
           return right(Trivia(
               id: const Uuid().v4(),
               searchTerm: searchTerm,
-              imageUrl: imageUrl,
               description: result.toString()));
         } else {
           return left(FileNotFound("Article not found"));

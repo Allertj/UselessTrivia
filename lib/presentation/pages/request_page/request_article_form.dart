@@ -53,9 +53,6 @@ class _RequestArticleFormState extends State<RequestArticleForm> {
           }
         },
         builder: (context, state) {
-          // if (state is HasFailed) {
-          //   return
-          // } else {
             return Column(children: <Widget>[
               Row(children: <Widget>[
                 Expanded(child: buildTextField()),

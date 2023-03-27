@@ -21,7 +21,6 @@ class ReadPage extends StatelessWidget {
                   context.popRoute();
                 }),
             title: Text(title)),
-        body: Container(
-            child: SingleChildScrollView(child: Html(data: htmlString,))));
+        body: SingleChildScrollView(child: Html(data: htmlString,)));
   }
 }

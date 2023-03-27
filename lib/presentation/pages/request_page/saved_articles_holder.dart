@@ -15,7 +15,7 @@ class SavedArticlesHolder extends StatelessWidget {
   SavedArticlesHolder({super.key});
 
   final RequestWatcher requestBloc = getIt<RequestWatcher>();
-  final router2 = getIt<AppRouter>();
+  final router = getIt<AppRouter>();
 
   @override
   Widget build(BuildContext context) {
@@ -69,15 +69,12 @@ class SavedArticlesHolder extends StatelessWidget {
                         child: BlocListener<RequestWatcher, RequestState>(
                           listenWhen: (previousState, currentState) {
                             if (previousState is InProgress) {
-                              // Navigator.pop(context);
-                              // Navigator.of(context).pop();
                               Navigator.of(context, rootNavigator: true).pop();
                             }
                             return true;
                           },
 
                           listener: (context, state) {
-
                             if (state is InProgress) {
                               showDialog(
                                 barrierDismissible: true,
@@ -91,7 +88,7 @@ class SavedArticlesHolder extends StatelessWidget {
                                 context: context,
                               );
                             } else if (state is HasSuccessfullyDownloaded) {
-                              router2.push(ReadRoute(title: state.result.searchTerm, htmlString: state.result.description, ));
+                              router.push(ReadRoute(title: state.result.searchTerm, htmlString: state.result.description, ));
                             } else if (state is HasFailed) {
                               AlertDialogUtil.showAlertDialog(context, "failed",
                                   state.failureMessage, false);

@@ -28,31 +28,14 @@ class RequestPage extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                router.push(AlternativeMapRoute());
-              }),
-          IconButton(
-              icon: const Icon(
-                Icons.directions_transit,
-                color: Colors.white,
-              ),
-              onPressed: () {
                 router.push(const MapRoute());
               }),
-          IconButton(
-              icon: const Icon(
-                Icons.dashboard,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                router.push(const DashboardRoute());
-              })
         ]),
         body: Center(
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) =>
-                    getIt<DatabaseWatcher>()..add(AskForCurrentEntries()),
+                create: (context) => getIt<DatabaseWatcher>()..add(AskForCurrentEntries()),
               ),
               BlocProvider(
                 create: (context) => getIt<RequestWatcher>(),
@@ -61,7 +44,7 @@ class RequestPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RequestArticleForm(),
+                const RequestArticleForm(),
                 Expanded(child: SavedArticlesHolder())
               ],
             ),

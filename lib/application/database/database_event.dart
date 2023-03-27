@@ -15,7 +15,6 @@ class DatabaseEvent {}
 
 class Inserted extends DatabaseEvent {
   final Trivia newTrivia;
-
   Inserted(this.newTrivia);
 }
 
