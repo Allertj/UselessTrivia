@@ -1,6 +1,6 @@
 # useless_trivia
 
-A new Flutter project.
+A new app, with which you can impress stupid people. As you can see, I like my commit messages short and nonsensical. 
 
 ## Getting Started
 
