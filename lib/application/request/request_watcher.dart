@@ -18,22 +18,28 @@ class RequestWatcher extends Bloc<RequestEvent, RequestState> {
 
     on<RequestSummary>((event, emit) async {
       emit(const InProgress());
-      final received = await _wikiRepository.getTriviaByString(event.searchTerm);
-      received.fold(
-          (failure) => emit(HasFailed(failure.message)),
-          (trivia) async => {
-                emit(IsSuccessful(trivia)),
-                database.triviaDao.insertTrivia(trivia),
-                watcher.add(Inserted(trivia))
-              });
+      final currentEntries = await database.triviaDao.findTrivia(event.searchTerm);
+      if (currentEntries.isEmpty) {
+        final received = await _wikiRepository.getTriviaByString(event.searchTerm);
+        received.fold(
+            (failure) => emit(HasFailed(failure.message)),
+            (trivia) async => {
+                  emit(IsSuccessful(trivia)),
+                  database.triviaDao.insertTrivia(trivia),
+                  watcher.add(Inserted(trivia))
+                });
+      } else {
+        emit(HasFailed("Dit artikel is al opgeslagen"));
+      }
     });
 
     on<RequestLead>((event, emit) async {
       emit(const InProgress());
-      final received = await _wikiRepository.getMobileSectionLeadByString(event.searchTerm);
+      final received =
+          await _wikiRepository.getMobileSectionLeadByString(event.searchTerm);
       received.fold(
-          (failure) => emit(HasFailed(failure.message)),
-          (trivia) async => emit(HasSuccessfullyDownloaded(trivia)),
+        (failure) => emit(HasFailed(failure.message)),
+        (trivia) async => emit(HasSuccessfullyDownloaded(trivia)),
       );
     });
 

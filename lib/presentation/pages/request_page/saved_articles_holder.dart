@@ -36,6 +36,7 @@ class SavedArticlesHolder extends StatelessWidget {
                   SizedBox(height: 20),
                   Text(textAlign: TextAlign.center, "LADEN")
                 ]));
+
           }, isEmpty: () {
             return Center(
                 child: Column(
@@ -52,6 +53,8 @@ class SavedArticlesHolder extends StatelessWidget {
                   Text(
                       textAlign: TextAlign.center, "Geen Artikelen beschikbaar")
                 ]));
+
+
           }, hasEntries: (List<Trivia> trivia) {
             return ListView.builder(
                 itemCount: trivia.length,

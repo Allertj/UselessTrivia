@@ -37,13 +37,13 @@ class WikipediaRepository implements IWikipediaRepository {
               searchTerm: year.toString(),
               description: wikipediaResponse.body!.sections.toString()));
         } else {
-          return left(FileNotFound("Article not found"));
+          return left(const FileNotFound("Article not found"));
         }
       } catch (e) {
-        return left(Unexpected("Unknown error"));
+        return left(const Unexpected("Unknown error"));
       }
     } catch (e) {
-      return left(ServerError("Server not reachable"));
+      return left(const ServerError("Server not reachable"));
     }
   }
 
@@ -61,13 +61,13 @@ class WikipediaRepository implements IWikipediaRepository {
               searchTerm: searchTerm,
               description: result.toString()));
         } else {
-          return left(FileNotFound("Article not found"));
+          return left(const FileNotFound("Article not found"));
         }
       } catch (e) {
-        return left(Unexpected("Unknown error"));
+        return left(const Unexpected("Unknown error"));
       }
     } catch (e) {
-      return left(ServerError("Server not reachable"));
+      return left(const ServerError("Server not reachable"));
     }
   }
 
@@ -83,13 +83,13 @@ class WikipediaRepository implements IWikipediaRepository {
               searchTerm: year.toString(),
               description: wikipediaResponse.body!.extract));
         } else {
-          return left(FileNotFound("Article not found"));
+          return left(const FileNotFound("Article not found"));
         }
       } catch (e) {
-        return left(Unexpected("Unknown error"));
+        return left(const Unexpected("Unknown error"));
       }
     } catch (e) {
-      return left(ServerError("Server not reachable"));
+      return left(const ServerError("Server not reachable"));
     }
   }
 
@@ -106,13 +106,13 @@ class WikipediaRepository implements IWikipediaRepository {
               searchTerm: searchTerm,
               description: wikipediaResponse.body!.extract));
         } else {
-          return left(FileNotFound("Article not found"));
+          return left(const FileNotFound("Article not found"));
         }
       } catch (e) {
-        return left(Unexpected("Unknown error"));
+        return left(const Unexpected("Unknown error"));
       }
     } catch (e) {
-      return left(ServerError("Server not reachable"));
+      return left(const ServerError("Server not reachable"));
     }
   }
  }

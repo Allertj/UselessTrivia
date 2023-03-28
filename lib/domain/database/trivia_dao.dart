@@ -3,7 +3,6 @@ import 'package:drift/drift.dart';
 import '../../infrastructure/database/database.dart';
 part 'trivia_dao.g.dart';
 
-
 @DriftAccessor(tables: [TriviaClass])
 class TriviaDao extends DatabaseAccessor<AppDatabase> with _$TriviaDaoMixin {
 

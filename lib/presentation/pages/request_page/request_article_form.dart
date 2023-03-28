@@ -49,7 +49,7 @@ class _RequestArticleFormState extends State<RequestArticleForm> {
         listener: (context, state) {
           if (state is HasFailed) {
             AlertDialogUtil.showAlertDialog(
-                context, "Failure", state.failureMessage, false);
+                context, "Fout", state.failureMessage, false);
           }
         },
         builder: (context, state) {
