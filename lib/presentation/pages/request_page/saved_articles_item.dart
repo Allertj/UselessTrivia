@@ -51,8 +51,9 @@ class SavedArticlesItem extends StatelessWidget {
                 htmlString: state.result.description,
               ));
             } else if (state is HasFailed) {
+              Navigator.of(context, rootNavigator: true).pop();
               AlertDialogUtil.showAlertDialog(
-                  context, "failed", state.failureMessage, false);
+                  context, "Fout", state.failureMessage, false);
             }
           },
           child: ListTile(
