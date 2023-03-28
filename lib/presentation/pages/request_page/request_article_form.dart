@@ -61,6 +61,7 @@ class _RequestArticleFormState extends State<RequestArticleForm> {
                   onPressed: () async =>
                   {
                     searchTerm = myController.value.text.toString(),
+                    FocusScope.of(context).requestFocus(FocusNode()),
                     requestBloc.add(RequestSummary(searchTerm)),
                   },
                 )

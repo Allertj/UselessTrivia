@@ -15,13 +15,16 @@ class DatabaseWatcher extends Bloc<DatabaseEvent, DatabaseState> {
       if (current.isEmpty) {
         emit(const IsEmpty());
       } else {
+        current.sort((a, b) => a.searchTerm.compareTo(b.searchTerm));
         emit(HasEntries(current));
       }
     });
 
     on<Inserted>((event, emit) async {
       if (state is HasEntries) {
-        emit(DatabaseState.hasEntries([...(state as HasEntries).entries, event.newEntry]));
+        final currentEntries = [...(state as HasEntries).entries, event.newEntry];
+        currentEntries.sort((a, b) => a.searchTerm.compareTo(b.searchTerm));
+        emit(DatabaseState.hasEntries(currentEntries));
       } else {
         emit(DatabaseState.hasEntries([event.newEntry]));
       }

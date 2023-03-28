@@ -29,14 +29,13 @@ class RequestWatcher extends Bloc<RequestEvent, RequestState> {
                   watcher.add(Inserted(trivia))
                 });
       } else {
-        emit(HasFailed("Dit artikel is al opgeslagen"));
+        emit(const HasFailed("Dit artikel is al opgeslagen"));
       }
     });
 
     on<RequestLead>((event, emit) async {
       emit(const InProgress());
-      final received =
-          await _wikiRepository.getMobileSectionLeadByString(event.searchTerm);
+      final received = await _wikiRepository.getMobileSectionLeadByString(event.searchTerm);
       received.fold(
         (failure) => emit(HasFailed(failure.message)),
         (trivia) async => emit(HasSuccessfullyDownloaded(trivia)),
