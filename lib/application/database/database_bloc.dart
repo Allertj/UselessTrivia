@@ -5,10 +5,10 @@ import 'database_event.dart';
 import 'database_state.dart';
 
 @singleton
-class DatabaseWatcher extends Bloc<DatabaseEvent, DatabaseState> {
+class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
   final AppDatabase _database;
 
-  DatabaseWatcher(this._database) : super(const IsLoading()) {
+  DatabaseBloc(this._database) : super(const IsLoading()) {
 
     on<AskForCurrentEntries> ((event, emit) async {
       List<Trivia> current = await _database.triviaDao.selectAllTrivia();

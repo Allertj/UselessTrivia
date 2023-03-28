@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:useless_trivia/application/request/request_watcher.dart';
+import 'package:useless_trivia/application/request/request_bloc.dart';
 import '../../../application/request/request_event.dart';
 import '../../../application/request/request_state.dart';
 import '../../../injection.dart';
@@ -42,10 +42,10 @@ class _RequestArticleFormState extends State<RequestArticleForm> {
 
   @override
   Widget build(BuildContext context) {
-    final RequestWatcher requestBloc = getIt<RequestWatcher>();
+    final RequestBloc requestBloc = getIt<RequestBloc>();
     String searchTerm;
 
-    return BlocConsumer<RequestWatcher, RequestState>(
+    return BlocConsumer<RequestBloc, RequestState>(
         listener: (context, state) {
           if (state is HasFailed) {
             AlertDialogUtil.showAlertDialog(

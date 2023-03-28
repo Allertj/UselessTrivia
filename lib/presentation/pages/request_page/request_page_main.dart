@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:useless_trivia/application/database/database_event.dart';
-import 'package:useless_trivia/application/database/database_watcher.dart';
-import 'package:useless_trivia/application/request/request_watcher.dart';
+import 'package:useless_trivia/application/database/database_bloc.dart';
+import 'package:useless_trivia/application/request/request_bloc.dart';
 import 'package:useless_trivia/injection.dart';
 import 'package:useless_trivia/presentation/pages/request_page/saved_articles_holder.dart';
 import 'package:useless_trivia/presentation/routes/router.gr.dart';
@@ -35,10 +35,10 @@ class RequestPage extends StatelessWidget {
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => getIt<DatabaseWatcher>()..add(DatabaseEvent.askForCurrentEntries()),
+                create: (context) => getIt<DatabaseBloc>()..add(DatabaseEvent.askForCurrentEntries()),
               ),
               BlocProvider(
-                create: (context) => getIt<RequestWatcher>(),
+                create: (context) => getIt<RequestBloc>(),
               ),
             ],
             child: Column(

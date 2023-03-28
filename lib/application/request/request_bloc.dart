@@ -6,15 +6,15 @@ import 'package:useless_trivia/application/request/request_state.dart';
 import '../../domain/wikipedia/i_wikipedia_repository.dart';
 import '../../infrastructure/database/database.dart';
 import '../database/database_event.dart';
-import '../database/database_watcher.dart';
+import '../database/database_bloc.dart';
 
 @singleton
-class RequestWatcher extends Bloc<RequestEvent, RequestState> {
+class RequestBloc extends Bloc<RequestEvent, RequestState> {
   final IWikipediaRepository _wikiRepository;
   final AppDatabase database;
-  final DatabaseWatcher watcher;
+  final DatabaseBloc watcher;
 
-  RequestWatcher(this._wikiRepository, this.database, this.watcher) : super(const IsIdle()) {
+  RequestBloc(this._wikiRepository, this.database, this.watcher) : super(const IsIdle()) {
 
     on<RequestSummary>((event, emit) async {
       emit(const InProgress());

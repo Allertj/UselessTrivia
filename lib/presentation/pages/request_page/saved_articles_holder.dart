@@ -6,8 +6,8 @@ import 'package:useless_trivia/application/request/request_state.dart';
 import 'package:useless_trivia/util/util.dart';
 
 import '../../../application/database/database_state.dart';
-import '../../../application/database/database_watcher.dart';
-import '../../../application/request/request_watcher.dart';
+import '../../../application/database/database_bloc.dart';
+import '../../../application/request/request_bloc.dart';
 import '../../../infrastructure/database/database.dart';
 import '../../../injection.dart';
 import '../../routes/router.dart';
@@ -16,7 +16,7 @@ import '../../routes/router.gr.dart';
 class SavedArticlesHolder extends StatelessWidget {
   SavedArticlesHolder({super.key});
 
-  final RequestWatcher requestBloc = getIt<RequestWatcher>();
+  final RequestBloc requestBloc = getIt<RequestBloc>();
   final router = getIt<AppRouter>();
 
   @override
@@ -25,7 +25,7 @@ class SavedArticlesHolder extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Opgeslagen artikelen'),
         ),
-        body: BlocBuilder<DatabaseWatcher, DatabaseState>(
+        body: BlocBuilder<DatabaseBloc, DatabaseState>(
             builder: (context, state) {
           return state.when(isLoading: () {
             return Center(
@@ -78,7 +78,7 @@ class SavedArticlesHolder extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0)),
                               color: Colors.grey.withOpacity(0.25),
-                              child: BlocListener<RequestWatcher, RequestState>(
+                              child: BlocListener<RequestBloc, RequestState>(
                                 listenWhen: (previousState, currentState) {
                                   if (previousState is InProgress) {
                                     Navigator.of(context, rootNavigator: true)

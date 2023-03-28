@@ -14,7 +14,6 @@ class WikipediaResponse {
 @JsonSerializable()
 class WikipediaMobileSectionResponse {
   List<Section> sections;
-  // Image? image;
 
   WikipediaMobileSectionResponse(this.sections);
 
