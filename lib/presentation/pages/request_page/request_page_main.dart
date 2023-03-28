@@ -35,7 +35,7 @@ class RequestPage extends StatelessWidget {
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => getIt<DatabaseWatcher>()..add(AskForCurrentEntries()),
+                create: (context) => getIt<DatabaseWatcher>()..add(DatabaseEvent.askForCurrentEntries()),
               ),
               BlocProvider(
                 create: (context) => getIt<RequestWatcher>(),

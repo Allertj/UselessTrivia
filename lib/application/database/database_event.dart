@@ -1,25 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 import '../../infrastructure/database/database.dart';
 
-// part 'database_event.freezed.dart';
-//
-// @freezed
-// abstract class NewDatabaseEvent with _$NewDatabaseEvent {
-//   const factory NewDatabaseEvent.inserted(Trivia newEntry) = Inserted;
-//   const factory NewDatabaseEvent.deleted() = Deleted;
-//   const factory NewDatabaseEvent.changed() = Changed;
-// }
+part 'database_event.freezed.dart';
 
-class DatabaseEvent {}
-
-class Inserted extends DatabaseEvent {
-  final Trivia newTrivia;
-  Inserted(this.newTrivia);
+@freezed
+abstract class DatabaseEvent with _$DatabaseEvent {
+  const factory DatabaseEvent.inserted(Trivia newEntry) = Inserted;
+  const factory DatabaseEvent.deleted(String title) = Deleted;
+  const factory DatabaseEvent.changed() = Changed;
+  const factory DatabaseEvent.askForCurrentEntries() = AskForCurrentEntries;
 }
-
-class Deleted extends DatabaseEvent {}
-
-class Changed extends DatabaseEvent {}
-
-class AskForCurrentEntries extends DatabaseEvent {}

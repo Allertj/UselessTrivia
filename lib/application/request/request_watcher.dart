@@ -14,10 +14,10 @@ class RequestWatcher extends Bloc<RequestEvent, RequestState> {
   final AppDatabase database;
   final DatabaseWatcher watcher;
 
-  RequestWatcher(this._wikiRepository, this.database, this.watcher) : super(IsIdle()) {
+  RequestWatcher(this._wikiRepository, this.database, this.watcher) : super(const IsIdle()) {
 
     on<RequestSummary>((event, emit) async {
-      emit(InProgress());
+      emit(const InProgress());
       final received = await _wikiRepository.getTriviaByString(event.searchTerm);
       received.fold(
           (failure) => emit(HasFailed(failure.message)),
@@ -29,7 +29,7 @@ class RequestWatcher extends Bloc<RequestEvent, RequestState> {
     });
 
     on<RequestLead>((event, emit) async {
-      emit(InProgress());
+      emit(const InProgress());
       final received = await _wikiRepository.getMobileSectionLeadByString(event.searchTerm);
       received.fold(
           (failure) => emit(HasFailed(failure.message)),
@@ -38,10 +38,10 @@ class RequestWatcher extends Bloc<RequestEvent, RequestState> {
     });
 
     on<RequestDeletion>((event, emit) async {
-      emit(InProgress());
-      database.triviaDao.deleteTriviaBySearchTerm(event.itemToBeDeleted);
-      emit(IsSuccessfullyDeleted());
-      watcher.add(Deleted());
+      emit(const InProgress());
+      database.triviaDao.deleteTriviaBySearchTerm(event.titleOfItemToBeDeleted);
+      emit(const IsSuccesfullyDeleted());
+      watcher.add(Deleted(event.titleOfItemToBeDeleted));
     });
   }
 }

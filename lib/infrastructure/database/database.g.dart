@@ -26,14 +26,8 @@ class $TriviaClassTable extends TriviaClass
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _imageUrlMeta =
-      const VerificationMeta('imageUrl');
   @override
-  late final GeneratedColumn<String> imageUrl = GeneratedColumn<String>(
-      'image_url', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  @override
-  List<GeneratedColumn> get $columns => [id, searchTerm, description, imageUrl];
+  List<GeneratedColumn> get $columns => [id, searchTerm, description];
   @override
   String get aliasedName => _alias ?? 'trivia_class';
   @override
@@ -64,10 +58,6 @@ class $TriviaClassTable extends TriviaClass
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
-    if (data.containsKey('image_url')) {
-      context.handle(_imageUrlMeta,
-          imageUrl.isAcceptableOrUnknown(data['image_url']!, _imageUrlMeta));
-    }
     return context;
   }
 
@@ -83,8 +73,6 @@ class $TriviaClassTable extends TriviaClass
           .read(DriftSqlType.string, data['${effectivePrefix}search_term'])!,
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description'])!,
-      imageUrl: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}image_url']),
     );
   }
 
@@ -98,21 +86,14 @@ class Trivia extends DataClass implements Insertable<Trivia> {
   final String id;
   final String searchTerm;
   final String description;
-  final String? imageUrl;
   const Trivia(
-      {required this.id,
-      required this.searchTerm,
-      required this.description,
-      this.imageUrl});
+      {required this.id, required this.searchTerm, required this.description});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['search_term'] = Variable<String>(searchTerm);
     map['description'] = Variable<String>(description);
-    if (!nullToAbsent || imageUrl != null) {
-      map['image_url'] = Variable<String>(imageUrl);
-    }
     return map;
   }
 
@@ -121,9 +102,6 @@ class Trivia extends DataClass implements Insertable<Trivia> {
       id: Value(id),
       searchTerm: Value(searchTerm),
       description: Value(description),
-      imageUrl: imageUrl == null && nullToAbsent
-          ? const Value.absent()
-          : Value(imageUrl),
     );
   }
 
@@ -134,7 +112,6 @@ class Trivia extends DataClass implements Insertable<Trivia> {
       id: serializer.fromJson<String>(json['Id']),
       searchTerm: serializer.fromJson<String>(json['SearchTerm']),
       description: serializer.fromJson<String>(json['Description']),
-      imageUrl: serializer.fromJson<String?>(json['ImageUrl']),
     );
   }
   @override
@@ -144,60 +121,49 @@ class Trivia extends DataClass implements Insertable<Trivia> {
       'Id': serializer.toJson<String>(id),
       'SearchTerm': serializer.toJson<String>(searchTerm),
       'Description': serializer.toJson<String>(description),
-      'ImageUrl': serializer.toJson<String?>(imageUrl),
     };
   }
 
-  Trivia copyWith(
-          {String? id,
-          String? searchTerm,
-          String? description,
-          Value<String?> imageUrl = const Value.absent()}) =>
+  Trivia copyWith({String? id, String? searchTerm, String? description}) =>
       Trivia(
         id: id ?? this.id,
         searchTerm: searchTerm ?? this.searchTerm,
         description: description ?? this.description,
-        imageUrl: imageUrl.present ? imageUrl.value : this.imageUrl,
       );
   @override
   String toString() {
     return (StringBuffer('Trivia(')
           ..write('id: $id, ')
           ..write('searchTerm: $searchTerm, ')
-          ..write('description: $description, ')
-          ..write('imageUrl: $imageUrl')
+          ..write('description: $description')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, searchTerm, description, imageUrl);
+  int get hashCode => Object.hash(id, searchTerm, description);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Trivia &&
           other.id == this.id &&
           other.searchTerm == this.searchTerm &&
-          other.description == this.description &&
-          other.imageUrl == this.imageUrl);
+          other.description == this.description);
 }
 
 class TriviaClassCompanion extends UpdateCompanion<Trivia> {
   final Value<String> id;
   final Value<String> searchTerm;
   final Value<String> description;
-  final Value<String?> imageUrl;
   const TriviaClassCompanion({
     this.id = const Value.absent(),
     this.searchTerm = const Value.absent(),
     this.description = const Value.absent(),
-    this.imageUrl = const Value.absent(),
   });
   TriviaClassCompanion.insert({
     required String id,
     required String searchTerm,
     required String description,
-    this.imageUrl = const Value.absent(),
   })  : id = Value(id),
         searchTerm = Value(searchTerm),
         description = Value(description);
@@ -205,26 +171,22 @@ class TriviaClassCompanion extends UpdateCompanion<Trivia> {
     Expression<String>? id,
     Expression<String>? searchTerm,
     Expression<String>? description,
-    Expression<String>? imageUrl,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (searchTerm != null) 'search_term': searchTerm,
       if (description != null) 'description': description,
-      if (imageUrl != null) 'image_url': imageUrl,
     });
   }
 
   TriviaClassCompanion copyWith(
       {Value<String>? id,
       Value<String>? searchTerm,
-      Value<String>? description,
-      Value<String?>? imageUrl}) {
+      Value<String>? description}) {
     return TriviaClassCompanion(
       id: id ?? this.id,
       searchTerm: searchTerm ?? this.searchTerm,
       description: description ?? this.description,
-      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
@@ -240,9 +202,6 @@ class TriviaClassCompanion extends UpdateCompanion<Trivia> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
-    if (imageUrl.present) {
-      map['image_url'] = Variable<String>(imageUrl.value);
-    }
     return map;
   }
 
@@ -251,8 +210,7 @@ class TriviaClassCompanion extends UpdateCompanion<Trivia> {
     return (StringBuffer('TriviaClassCompanion(')
           ..write('id: $id, ')
           ..write('searchTerm: $searchTerm, ')
-          ..write('description: $description, ')
-          ..write('imageUrl: $imageUrl')
+          ..write('description: $description')
           ..write(')'))
         .toString();
   }

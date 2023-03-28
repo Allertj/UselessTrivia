@@ -8,32 +8,32 @@ import 'database_state.dart';
 class DatabaseWatcher extends Bloc<DatabaseEvent, DatabaseState> {
   final AppDatabase _database;
 
-  DatabaseWatcher(this._database) : super(IsLoading()) {
+  DatabaseWatcher(this._database) : super(const IsLoading()) {
 
     on<AskForCurrentEntries> ((event, emit) async {
       List<Trivia> current = await _database.triviaDao.selectAllTrivia();
       if (current.isEmpty) {
-        emit(IsEmpty());
+        emit(const IsEmpty());
       } else {
         emit(HasEntries(current));
       }
     });
 
     on<Inserted>((event, emit) async {
-      List<Trivia> current = await _database.triviaDao.selectAllTrivia();
-      if (current.isEmpty) {
-        emit(IsEmpty());
+      if (state is HasEntries) {
+        emit(DatabaseState.hasEntries([...(state as HasEntries).entries, event.newEntry]));
       } else {
-        emit(HasEntries(current));
+        emit(DatabaseState.hasEntries([event.newEntry]));
       }
     });
 
     on<Deleted>((event, emit) async {
-      List<Trivia> current = await _database.triviaDao.selectAllTrivia();
-      if (current.isEmpty) {
-        emit(IsEmpty());
+      List<Trivia> currentList = [...(state as HasEntries).entries];
+      currentList.removeWhere((element) => element.searchTerm == event.title);
+      if (currentList.isEmpty) {
+        emit(const DatabaseState.isEmpty());
       } else {
-        emit(HasEntries(current));
+        emit(DatabaseState.hasEntries(currentList));
       }
     });
   }
