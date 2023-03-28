@@ -36,7 +36,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.0
 
   # UI
-  flutter_svg: 2.0.4 # lower version include in flutter_html
+  flutter_svg: 2.0.4
   font_awesome_flutter: 10.4.0
   country_icons: 2.0.2
   flutter_map: 3.1.0
@@ -44,7 +44,7 @@ dependencies:
   material_design_icons_flutter: 6.0.7096
   bubble: 1.2.1 # 2 years old, Dart 3 compatible.
   google_maps_flutter: 2.2.5
-  webview_flutter: 4.0.7 # lower version include in flutter_html
+  webview_flutter: 4.0.7
   cached_network_image: 3.2.3
   another_flushbar: 1.12.29 # flushbar: ^1.10.4 # could not find a more recent version, this is basically the same library with null safety.
   auto_route: 6.0.1
@@ -59,7 +59,7 @@ dependencies:
   # Native functionality
   shared_preferences: 2.0.20
   url_launcher: 6.1.10
-  flutter_local_notifications: 13.0.0 # lower version include in flutter_html
+  flutter_local_notifications: 13.0.0
   maps_launcher: 2.2.0
   package_info_plus: 3.0.3 # package_info 2.0.2 is 22 months old and deprecated. Replaced by package_info_plus.
 
@@ -88,7 +88,7 @@ dependencies:
   flutter_html: 3.0.0-alpha.6
 #  flutter_widget_from_html: 0.10.0
   flutter_osm_plugin: ^0.51.0
-  freezed: 2.3.2
+
   automatic_animated_list: 1.1.0
 
 
@@ -97,15 +97,20 @@ dev_dependencies:
     sdk: flutter
 
   lint: 2.0.1
+  freezed: 2.3.2
   build_runner: '>=2.3.0 <4.0.0'
-  json_serializable: '>=4.4.0'
-  drift_dev: ^2.5.2
   injectable_generator: 2.1.4
-  chopper_generator: 6.0.0
   auto_route_generator: 6.0.0
-  flutter_lints: ^2.0.0
+  drift_dev: ^2.5.2
+  json_serializable: '>=4.4.0'
+  chopper_generator: 6.0.0
   import_sorter: 4.6.0
   flutter_launcher_icons: 0.12.0
+
+  # Just included for this project.
+  flutter_lints: ^2.0.0
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
