@@ -1,17 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:useless_trivia/infrastructure/database/dao/trivia_dao.dart';
+import '../../domain/database/i_trivia_dao.dart';
 import '../../infrastructure/database/database.dart';
 import 'database_event.dart';
 import 'database_state.dart';
 
 @singleton
 class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
-  final AppDatabase _database;
+  final ITriviaDao triviaDao;
 
-  DatabaseBloc(this._database) : super(const IsLoading()) {
+  DatabaseBloc(this.triviaDao) : super(const IsLoading()) {
 
     on<AskForCurrentEntries> ((event, emit) async {
-      List<Trivia> current = await _database.triviaDao.selectAllTrivia();
+      List<Trivia> current = await triviaDao.selectAllTrivia();
       if (current.isEmpty) {
         emit(const IsEmpty());
       } else {

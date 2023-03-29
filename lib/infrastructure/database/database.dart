@@ -5,22 +5,10 @@ import 'package:drift/native.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
-import 'package:useless_trivia/domain/database/trivia_dao.dart';
+import 'package:useless_trivia/infrastructure/database/dao/trivia_dao.dart';
+import 'package:useless_trivia/infrastructure/database/table/trivia_class.dart';
 
 part 'database.g.dart';
-
-@DataClassName("Trivia")
-class TriviaClass extends Table {
-  @JsonKey("Id")
-  TextColumn get id => text()();
-  @JsonKey("SearchTerm")
-  TextColumn get searchTerm => text()();
-  @JsonKey("Description")
-  TextColumn get description => text()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
 
 @singleton
 @DriftDatabase(tables: [TriviaClass], daos: [TriviaDao])
