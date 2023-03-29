@@ -1,13 +1,13 @@
 import 'package:chopper/chopper.dart';
 import 'package:dartz/dartz.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:useless_trivia/infrastructure/wikipedia/responses.dart';
 import 'package:useless_trivia/infrastructure/wikipedia/wikipedia_chopper.dart';
 import 'package:uuid/uuid.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/wikipedia/i_wikipedia_repository.dart';
-import 'wikipedia_failure.dart';
+
+import '../../domain/wikipedia/wikipedia_failure.dart';
 import '../../util/json_converter.dart';
 import '../database/database.dart';
 

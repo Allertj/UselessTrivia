@@ -7,8 +7,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:useless_trivia/application/database/database_bloc.dart'
-    as _i5;
+import 'package:useless_trivia/application/database/database_bloc.dart' as _i5;
+import 'package:useless_trivia/application/form/textfield_bloc.dart' as _i9;
 import 'package:useless_trivia/application/request/request_bloc.dart' as _i8;
 import 'package:useless_trivia/domain/wikipedia/i_wikipedia_repository.dart'
     as _i6;
@@ -39,5 +39,6 @@ _i1.GetIt init(
     gh<_i3.AppDatabase>(),
     gh<_i5.DatabaseBloc>(),
   ));
+  gh.singleton<_i9.TextFieldBloc>(_i9.TextFieldBloc());
   return getIt;
 }

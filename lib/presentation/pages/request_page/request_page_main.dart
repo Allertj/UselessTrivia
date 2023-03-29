@@ -9,6 +9,7 @@ import 'package:useless_trivia/application/request/request_bloc.dart';
 import 'package:useless_trivia/injection.dart';
 import 'package:useless_trivia/presentation/pages/request_page/saved_articles_holder.dart';
 import 'package:useless_trivia/presentation/routes/router.gr.dart';
+import '../../../application/form/textfield_bloc.dart';
 import '../../routes/router.dart';
 import 'request_article_form.dart';
 
@@ -35,16 +36,19 @@ class RequestPage extends StatelessWidget {
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => getIt<DatabaseBloc>()..add(DatabaseEvent.askForCurrentEntries()),
+                create: (context) => getIt<DatabaseBloc>()..add(const DatabaseEvent.askForCurrentEntries()),
               ),
               BlocProvider(
                 create: (context) => getIt<RequestBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<TextFieldBloc>(),
               ),
             ],
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const RequestArticleForm(),
+                RequestArticleForm(),
                 Expanded(child: SavedArticlesHolder())
               ],
             ),

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../infrastructure/database/database.dart';
-import '../../infrastructure/wikipedia/wikipedia_failure.dart';
+import '../../domain/wikipedia/wikipedia_failure.dart';
 
 
 abstract class IWikipediaRepository {

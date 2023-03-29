@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'wikipedia_failure.freezed.dart';
+part '../../domain/wikipedia/wikipedia_failure.freezed.dart';
 
 @freezed
 abstract class WikipediaFailure with _$WikipediaFailure {
