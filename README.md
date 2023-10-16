@@ -1,16 +1,7 @@
-# useless_trivia
+# Useless Trivia
+This app is demo app, made to make my acquaintance with the Dart/Flutter platform. It has some basic UI things, like the equivalent of a recylerview in Flutter. It has an implementation of a database, a REST-api, and uses the Flutter Bloc Design pattern. More info on that here: 
+https://codewithandrea.com/articles/flutter-presentation-layer/
 
-A new app, with which you can impress stupid people. As you can see, I like my commit messages short and nonsensical. 
+In short, it has all the basic ingredients of a Flutter appliciation. 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+As it was solely made for myself, the commit messages are short and nonsensical. 
